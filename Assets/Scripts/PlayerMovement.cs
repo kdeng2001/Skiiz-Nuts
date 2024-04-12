@@ -4,22 +4,22 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    Rigidbody2D rb;
+    Rigidbody rb;
     [SerializeField] public float force = 10f;
     [SerializeField] public float maxSpeed = 10f;
     [SerializeField] public float defaultSpeed = 5f;
     private void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody>();
     }
-    public void Move(Vector2 direction)
+    public void Move(Vector3 direction)
     {
         Deccelerate(direction);
         Accelerate(direction);
         //DefaultMove();
 
     }
-    public void Accelerate(Vector2 direction)
+    public void Accelerate(Vector3 direction)
     {
         if (Mathf.Abs(rb.velocity.magnitude) > 10f) { return; }
         else if(PlayerActionManager.Instance.moveValue.y > 0)
@@ -28,10 +28,10 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void Deccelerate(Vector2 direction)
+    public void Deccelerate(Vector3 direction)
     {
         if(rb.velocity.y == 0) { return; }
-        else if(rb.velocity.y < 0f) { rb.velocity = Vector2.zero; return; }
+        else if(rb.velocity.y < 0f) { rb.velocity = Vector3.zero; return; }
         else if(PlayerActionManager.Instance.moveValue.y < 0)
         {
             Debug.Log("backing up");

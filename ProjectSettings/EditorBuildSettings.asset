@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/POC 1.unity
     guid: 39b1de4c777e02941b18d66b850e0c91
+  - enabled: 1
+    path: Assets/Scenes/2.5D-POC.unity
+    guid: 1328cfbe1ba876946ab3b6a7789b8828
   m_configObjects: {}

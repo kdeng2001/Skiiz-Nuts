@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class PlayerRotate : MonoBehaviour
 {
-    private Rigidbody2D rb;
-    public Vector2 direction { get; private set; }
+    private Rigidbody rb;
+    public Vector3 direction { get; private set; }
     public int currentAngle { get; private set; }
     [SerializeField] public int rotateRate = 2;
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody>();
         currentAngle = 0;
-        direction = Vector2.up;
+        direction = Vector3.forward;
     }
     public void Rotate()
     {
@@ -30,12 +30,12 @@ public class PlayerRotate : MonoBehaviour
             if (currentAngle > -60) { currentAngle -= rotateRate; }
             SetDirection();
         }
-        Debug.DrawLine(transform.position, transform.position + 10 * (Vector3)direction, Color.red);
+        Debug.DrawLine(transform.position, transform.position + 10 * direction, Color.red);
     }
 
     public void SetDirection()
     {
-        direction = new Vector2(Mathf.Cos(Mathf.Deg2Rad * (currentAngle - 90)),
+        direction = new Vector3(Mathf.Cos(Mathf.Deg2Rad * (currentAngle - 90)), 0,
         Mathf.Sin(Mathf.Deg2Rad * (currentAngle + 90)));
         //Debug.Log(direction);
         rb.velocity = rb.velocity.magnitude * direction;
