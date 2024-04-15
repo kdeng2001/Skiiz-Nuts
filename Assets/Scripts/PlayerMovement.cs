@@ -26,8 +26,9 @@ public class PlayerMovement : MonoBehaviour
     {
         if(PlayerActionManager.Instance.moveValue.y > 0)
         {
-            playerAnimation.SetAccelerate(); 
-            if (Mathf.Abs(rb.velocity.magnitude) > maxSpeed) { return; }
+            playerAnimation.SetAccelerate();
+            Vector3 directionVelocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+            if (Mathf.Abs(directionVelocity.magnitude) > maxSpeed) { return; }
             else { rb.AddForce(1 * accelerateForce * direction); }
         }
     }
