@@ -7,33 +7,53 @@ public class PlayerAnimation : MonoBehaviour
     Animator playerAnimator;
     SpriteRenderer playerSprite;
 
-    static string IdleTurn = "IdleTurn";
-    static string IdleBack = "IdleBack";
-    static string AccelerateTurn = "AccelerateTurn";
-    static string AccelerateBack = "AccelerateBack";
+    public readonly string IdleTurn = "IdleTurn";
+    public readonly string IdleBack = "IdleBack";
+    public readonly string AccelerateTurn = "AccelerateTurn";
+    public readonly string AccelerateBack = "AccelerateBack";
+    public readonly string StartDrifting = "StartDrifting";
+    public readonly string Drifting = "Drifting";
+    public readonly string EndDrifting = "EndDrifting";
 
+    bool moveAnimations = true;
 
     string currentAnimation = "";
+    bool driftFlip;
     private void Awake()
     {
         playerAnimator = GetComponentInChildren<Animator>();
         playerSprite = GetComponentInChildren<SpriteRenderer>();
     }
 
-    public void HandleAnimation(int angle) 
-    {
-        //Debug.Log(angle);
-        if(PlayerActionManager.Instance.moveValue.y > 0) { SetAccelerate(angle); }
-        else { SetIdle(angle); }
-    }
+    //public void HandleAnimation() 
+    //{
+    //    //Debug.Log(angle);
+    //    if(PlayerActionManager.Instance.moveValue.y > 0) { SetAccelerate(); }
+    //    else { SetIdle(); }
+    //}
+    public void EnableMoveAnimations() { moveAnimations = true; }
+    public void DisableMoveAnimations() { moveAnimations = false; }
 
+    public bool AnimationHasEnded(string animation)
+    {
+        if (!playerAnimator.GetCurrentAnimatorStateInfo(0).loop &&
+            playerAnimator.GetCurrentAnimatorStateInfo(0).IsName(animation) &&
+            playerAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
+        {
+            // Animation has ended, do something
+            Debug.Log("Animation ended!");
+            return true;
+        }
+        return false;
+    }
     /// <summary>
     /// Idle animation functions
     /// </summary>
-    public void SetIdle(int angle) 
+    public void SetIdle() 
     {
-        if(angle > 20) { playerSprite.flipX = true; SetIdleTurn(); }
-        else if (angle < -20) { playerSprite.flipX = false; SetIdleTurn(); }
+        if(!moveAnimations) { return; }
+        if(PlayerActionManager.Instance.moveValue.x > 0) { playerSprite.flipX = true; SetIdleTurn(); }
+        else if (PlayerActionManager.Instance.moveValue.x < 0) { playerSprite.flipX = false; SetIdleTurn(); }
         else { SetIdleBack(); }
     }
     public void SetIdleBack() 
@@ -52,10 +72,11 @@ public class PlayerAnimation : MonoBehaviour
     /// <summary>
     /// Accelerate animation functions
     /// </summary>
-    public void SetAccelerate(int angle) 
+    public void SetAccelerate() 
     {
-        if (angle > 20) { playerSprite.flipX = true; SetAccelerateTurn(); }
-        else if (angle < -20) { playerSprite.flipX = false; SetAccelerateTurn(); }
+        if(!moveAnimations) { return; }
+        if (PlayerActionManager.Instance.moveValue.x > 0) { playerSprite.flipX = true; SetAccelerateTurn(); }
+        else if (PlayerActionManager.Instance.moveValue.x < 0) { playerSprite.flipX = false; SetAccelerateTurn(); }
         else { SetAccelerateBack(); }
     }
     public void SetAccelerateBack() 
@@ -71,4 +92,30 @@ public class PlayerAnimation : MonoBehaviour
         currentAnimation = AccelerateTurn;
     }
     
+    /// <summary>
+    /// Drift animation functions
+    /// </summary>
+    public void SetStartDrift()
+    {
+        if(currentAnimation == StartDrifting) { return; }
+        if (PlayerActionManager.Instance.moveValue.x > 0) { driftFlip = playerSprite.flipX = true; }
+        else if(PlayerActionManager.Instance.moveValue.x < 0) { driftFlip = playerSprite.flipX = false; }
+        else { return; }
+        playerAnimator.Play(StartDrifting);
+        currentAnimation = StartDrifting;
+    }
+    public void SetEndDrift()
+    {
+        if(currentAnimation == EndDrifting) { return; }
+        playerSprite.flipX = driftFlip;
+        playerAnimator.Play(EndDrifting);
+        currentAnimation = EndDrifting;
+    }
+    public void SetDrifting()
+    {
+        if(currentAnimation == Drifting) { return; }
+        playerSprite.flipX = driftFlip;
+        playerAnimator.Play(Drifting);
+        currentAnimation = Drifting;
+    }
 }

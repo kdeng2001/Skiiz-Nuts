@@ -4,53 +4,61 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    PlayerAnimation playerAnimation;
     Rigidbody rb;
-    [SerializeField] public float force = 10f;
+    [SerializeField] public float accelerateForce = 10f;
+    [SerializeField] public float deccelerateForce = 10f;
     [SerializeField] public float maxSpeed = 10f;
     [SerializeField] public float defaultSpeed = 5f;
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        playerAnimation = GetComponent<PlayerAnimation>();
     }
     public void Move(Vector3 direction)
     {
         Deccelerate(direction);
         Accelerate(direction);
-        //DefaultMove();
+        DefaultMove(direction);
 
     }
     public void Accelerate(Vector3 direction)
     {
-        if (Mathf.Abs(rb.velocity.magnitude) > 10f) { return; }
-        else if(PlayerActionManager.Instance.moveValue.y > 0)
+        if(PlayerActionManager.Instance.moveValue.y > 0)
         {
-            rb.AddForce(1 * force * direction);
+            playerAnimation.SetAccelerate(); 
+            if (Mathf.Abs(rb.velocity.magnitude) > maxSpeed) { return; }
+            else { rb.AddForce(1 * accelerateForce * direction); }
         }
     }
 
     public void Deccelerate(Vector3 direction)
     {
-        if(rb.velocity.y == 0) { return; }
-        else if(rb.velocity.y < 0f) { rb.velocity = Vector3.zero; return; }
-        else if(PlayerActionManager.Instance.moveValue.y < 0)
+        // slow to a stop
+        if(PlayerActionManager.Instance.moveValue.y < 0)
         {
+            // cannot go backwards
+            if (rb.velocity.z == 0) { return; }
+            else if (rb.velocity.z < 0f && direction.z > 0) { rb.velocity = Vector3.zero; return; }
+            else if (rb.velocity.z > 0f && direction.z < 0) { rb.velocity = Vector3.zero; return; }
             Debug.Log("backing up");
-            rb.AddForce(-1 * force * direction);
+            rb.AddForce(-1 * deccelerateForce * direction);
         }
     }
 
-    //public void DefaultMove()
-    //{
-    //    if(PlayerActionManager.Instance.moveValue.y == 0)
-    //    {
-    //        if(Mathf.Abs(rb.velocity.magnitude) > defaultSpeed) 
-    //        {
-    //            rb.AddForce(-1 * force * direction);
-    //        }
-    //        if(Mathf.Abs(rb.velocity.magnitude) < defaultSpeed) 
-    //        {
-    //            rb.AddForce(1 * force * direction); 
-    //        }
-    //    }
-    //}
+    public void DefaultMove(Vector3 direction)
+    {
+        if (PlayerActionManager.Instance.moveValue.y == 0)
+        {
+            playerAnimation.SetIdle();
+            //if (Mathf.Abs(rb.velocity.magnitude) > defaultSpeed)
+            //{
+            //    rb.AddForce(-1 * accelerateForce * direction);
+            //}
+            //if (Mathf.Abs(rb.velocity.magnitude) < defaultSpeed)
+            //{
+            //    rb.AddForce(1 * accelerateForce * direction);
+            //}
+        }
+    }
 }
