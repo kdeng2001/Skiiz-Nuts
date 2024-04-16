@@ -6,12 +6,14 @@ using UnityEngine.InputSystem;
 public class PlayerActionManager : MonoBehaviour
 {
     public static PlayerActionManager Instance;
+    public PlayerEvents playerEvents;
     public Vector2 moveValue;
     public bool driftValue;
     private void Awake()
     {
-        if(Instance != null) { Destroy(this); }
+        if(Instance != null && Instance != this) { Destroy(this); return; }
         else { Instance = this; }
+        playerEvents = new PlayerEvents();
     }
     private void OnEnable()
     {
@@ -53,13 +55,13 @@ public class PlayerActionManager : MonoBehaviour
     public void OnDriftStart(InputAction.CallbackContext context)
     {
         driftValue = context.ReadValueAsButton();
-        PlayerEvents.Instance.onStartDrift?.Invoke();
+        playerEvents.onStartDrift?.Invoke(moveValue.x);
         Debug.Log("action manager drift");
     }
 
     public void OnDriftEnd(InputAction.CallbackContext context)
     {
         driftValue = context.ReadValueAsButton();
-        PlayerEvents.Instance.onEndDrift?.Invoke();
+        playerEvents.onEndDrift?.Invoke();
     }
 }

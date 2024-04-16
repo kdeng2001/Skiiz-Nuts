@@ -1371,7 +1371,7 @@ GameObject:
   - component: {fileID: 324267613}
   - component: {fileID: 324267612}
   - component: {fileID: 324267611}
-  - component: {fileID: 324267610}
+  - component: {fileID: 324267621}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1379,28 +1379,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &324267610
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 324267609}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c62d0800238d5024faf1b1bfd658c30f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  driftSharpRotateRate: 3
-  driftWideRotateRate: 1
-  driftTimeThreshold:
-  - 0
-  - 1
-  - 2
-  driftBoosts:
-  - 0
-  - 0
-  - 0
 --- !u!114 &324267611
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1464,10 +1442,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d1b7df760674e84e8b70a5d96b59e9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseRotateRate: 2
+  baseSteerRate: 1
   limitRotation: 0
-  maxRotation: 60
-  rotateRate: 1
+  maxRotation: 30
+  steerRate: 0
 --- !u!114 &324267615
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1480,6 +1458,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 199f28315d441cd4ea8bb9efb719b618, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerEvents: {fileID: 0}
   moveValue: {x: 0, y: 0}
   driftValue: 0
 --- !u!114 &324267616
@@ -1495,7 +1474,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pMovement: {fileID: 0}
-  pRotate: {fileID: 0}
+  pSteer: {fileID: 0}
   pDrift: {fileID: 0}
   pAnimation: {fileID: 0}
 --- !u!114 &324267617
@@ -1512,7 +1491,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   accelerateForce: 10
   deccelerateForce: 10
-  maxSpeed: 60
+  maxSpeed: 30
   defaultSpeed: 5
 --- !u!114 &324267618
 MonoBehaviour:
@@ -1604,8 +1583,32 @@ Transform:
   - {fileID: 1295614202}
   - {fileID: 1091866533}
   - {fileID: 470661274}
+  - {fileID: 1460226671}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!114 &324267621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 324267609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c62d0800238d5024faf1b1bfd658c30f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sharpSteerRate: 4
+  normalSteerRate: 2
+  wideSteerRate: 1
+  driftTimeThreshold:
+  - 0.5
+  - 1.5
+  - 2
+  driftBoosts:
+  - 7
+  - 15
+  - 20
 --- !u!1001 &339515601
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4834,6 +4837,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4917495046473356982, guid: 66cffa5d0df423742853496a131bdd06, type: 3}
   m_PrefabInstance: {fileID: 1458855073}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1460226670
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1460226671}
+  m_Layer: 0
+  m_Name: GroundCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1460226671
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1460226670}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 324267620}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1473820662
 PrefabInstance:
   m_ObjectHideFlags: 0
