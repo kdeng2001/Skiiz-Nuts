@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] public float defaultSpeed = 5f;
     private void Awake()
     {
-        rb = GetComponent<Rigidbody>();
+        rb = GetComponentInChildren<Rigidbody>();
         playerAnimation = GetComponent<PlayerAnimation>();
     }
     public void Move(Vector3 direction)

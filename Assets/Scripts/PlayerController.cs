@@ -5,22 +5,22 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public PlayerMovement pMovement;
-    public PlayerRotate pRotate;
+    public Steer pSteer;
     public PlayerDrift pDrift;
     public PlayerAnimation pAnimation;
     
     private void Awake()
     {
         pMovement = GetComponent<PlayerMovement>();
-        pRotate = GetComponent<PlayerRotate>();
+        pSteer = GetComponent<Steer>();
         pDrift = GetComponent<PlayerDrift>();
         pAnimation = GetComponent<PlayerAnimation>();
     }
     void FixedUpdate()
     {
-        pRotate.Rotate();
+        pSteer.Steering(PlayerActionManager.Instance.moveValue.x);
         pDrift.Drift();
-        pMovement.Move(pRotate.direction);
+        pMovement.Move(pSteer.direction);
         //pAnimation.HandleAnimation();
     }
 }

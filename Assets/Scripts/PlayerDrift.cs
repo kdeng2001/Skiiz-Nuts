@@ -6,7 +6,7 @@ public class PlayerDrift : MonoBehaviour
 {
     PlayerController playerController;
     PlayerAnimation playerAnimation;
-    PlayerRotate playerRotate;
+    Steer steer;
     public bool drifting { get; private set; }
     public bool finishedDrifting { get; private set; }
     public float StartDriftTime { get; private set; }
@@ -20,7 +20,7 @@ public class PlayerDrift : MonoBehaviour
     private void Awake()
     {
         playerController = GetComponent<PlayerController>();
-        playerRotate = GetComponent<PlayerRotate>();
+        steer = GetComponent<Steer>();
         playerAnimation = GetComponent<PlayerAnimation>();
         drifting = false;
         finishedDrifting = true;
@@ -57,7 +57,7 @@ public class PlayerDrift : MonoBehaviour
         finishedDrifting = false;
         StartDriftTime = Time.time;
         driftBoostIndex = 0;
-        playerRotate.rotateRate = driftSharpRotateRate;
+        steer.rotateRate = driftSharpRotateRate;
     }
 
     public void EndDrift() 
@@ -83,7 +83,7 @@ public class PlayerDrift : MonoBehaviour
         if(!finishedDrifting && playerAnimation.AnimationHasEnded(playerAnimation.EndDrifting)) 
         {
             finishedDrifting = true;
-            playerRotate.rotateRate = playerRotate.baseRotateRate;
+            steer.rotateRate = steer.baseRotateRate;
             playerAnimation.EnableMoveAnimations();
             ActivateDriftBoost();
         }

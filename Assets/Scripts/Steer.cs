@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerRotate : MonoBehaviour
+public class Steer : MonoBehaviour
 {
     private Rigidbody rb;
     public Vector3 direction { get; private set; }
@@ -20,29 +20,20 @@ public class PlayerRotate : MonoBehaviour
         Mathf.Sin(Mathf.Deg2Rad * (currentAngle + 90)));
         rotateRate = baseRotateRate;
     }
-    public void Rotate()
+    /// <summary>
+    /// Steers player in a given direction to allow turning of corners
+    /// </summary>
+    /// <param name="inputDirection">-1,0,1 depending on horizontal input of player </param>
+    public void Steering(float inputDirection)
     {
-        //Quaternion.FromToRotation(forwardQuaternion)
-        if (PlayerActionManager.Instance.moveValue.x > 0)
-        {
-            //transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, maxRotation, 0), rotateRate);
-
-            /*if (currentAngle < maxRotation)*/ 
-            if(limitRotation && currentAngle >= maxRotation) { return; }
-            { currentAngle += rotateRate; }
-            transform.rotation = Quaternion.Euler(0, currentAngle, 0);
-            SetDirection();
-        }
-        else if (PlayerActionManager.Instance.moveValue.x < 0)
-        {
-
-            //transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, -1 * maxRotation, 0), rotateRate);
-           /* if (currentAngle > -1 * maxRotation)*/ 
-            if(limitRotation && currentAngle <= -1*maxRotation) { return; }
-            { currentAngle -= rotateRate; }
-            transform.rotation = Quaternion.Euler(0, currentAngle, 0);
-            SetDirection();
-        }
+        if(inputDirection == 0 && transform.eulerAngles.y == currentAngle) { return; }
+        if(limitRotation && currentAngle >= maxRotation) { return; }
+        currentAngle += Mathf.RoundToInt(inputDirection) * rotateRate;
+        //transform.rotation = Quaternion.Euler(0, currentAngle, 0);
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, currentAngle, 0), Time.deltaTime * 5);
+        //transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, new Vector3(0, currentAngle, 0), Time.deltaTime);
+        SetDirection();
+        
         Debug.DrawLine(transform.position, transform.position + 10 * direction, Color.red);
     }
 
