@@ -6,12 +6,12 @@ public class Steer : MonoBehaviour
 {
     private Rigidbody rb;
     public Vector3 direction { get; private set; }
-    public int currentAngle { get; private set; }
-    [SerializeField] public int baseSteerRate = 2;
+    public float currentAngle { get; private set; }
+    [SerializeField] public float baseSteerRate = 2;
     [SerializeField] public bool limitRotation = false;
-    [SerializeField] public int maxRotation = 60;
+    [SerializeField] public float maxRotation = 60;
 
-    public int steerRate;
+    public float steerRate;
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -28,7 +28,7 @@ public class Steer : MonoBehaviour
     {
         if(inputDirection == 0 && transform.eulerAngles.y == currentAngle) { return; }
         if(limitRotation && currentAngle >= maxRotation) { return; }
-        currentAngle += Mathf.RoundToInt(inputDirection) * steerRate;
+        currentAngle += inputDirection * steerRate;
         //transform.rotation = Quaternion.Euler(0, currentAngle, 0);
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, currentAngle, 0), Time.deltaTime * 5);
         //transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, new Vector3(0, currentAngle, 0), Time.deltaTime);

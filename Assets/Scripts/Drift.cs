@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Drift : MonoBehaviour
 {
@@ -12,14 +13,22 @@ public class Drift : MonoBehaviour
     public float StartDriftTime { get; private set; }
     public int driftInitDirection { get; private set; }
     
-    [SerializeField] public int sharpSteerRate = 4;
-    [SerializeField] public int normalSteerRate = 2;
-    [SerializeField] public int wideSteerRate = 1;
+    [SerializeField] public float sharpSteerRate = 4;
+    [SerializeField] public float normalSteerRate = 2;
+    [SerializeField] public float wideSteerRate = 1;
     [SerializeField] public float[] driftTimeThreshold = { 0,1,2 };
     [SerializeField] public float[] driftBoosts = { 0,0,0 };
     private int driftBoostIndex;
 
-    
+    [SerializeField] ParticleSystem rightDriftParticles;
+    ParticleSystem.MainModule rDPMain;
+    [SerializeField] ParticleSystem leftDriftParticles;
+    ParticleSystem.MainModule lDPMain;
+    [SerializeField] ParticleSystem speedBoostParticles;
+
+    [SerializeField] ImageAnimation speedBoostAnimation;
+    private Image speedBoostImage; 
+    public Color[] boostColors;
     private void Awake()
     {
         steer = GetComponent<Steer>();
@@ -27,11 +36,24 @@ public class Drift : MonoBehaviour
         playerAnimation = GetComponent<PlayerAnimation>();
         drifting = false;
         finishedDrifting = true;
+
+        rDPMain = rightDriftParticles.main;
+        lDPMain = leftDriftParticles.main;
+        rightDriftParticles.gameObject.SetActive(false);
+        leftDriftParticles.gameObject.SetActive(false);
+
+        if(speedBoostAnimation != null) 
+        {
+            speedBoostImage = speedBoostAnimation.gameObject.GetComponent<Image>();
+            speedBoostAnimation.gameObject.SetActive(false); 
+        }
     }
 
     public void StartDrift(float inputDirection) 
     {
         if(inputDirection == 0) { Debug.Log("drift needs direction"); return; }
+        if(inputDirection == -1) { leftDriftParticles.gameObject.SetActive(true); }
+        else { rightDriftParticles.gameObject.SetActive(true); }
         driftInitDirection = Mathf.RoundToInt(inputDirection);
         playerAnimation.DisableMoveAnimations();
         playerAnimation.SetStartDrift();
@@ -46,21 +68,12 @@ public class Drift : MonoBehaviour
         finishedDrifting = false;
         StartDriftTime = Time.time;
         driftBoostIndex = -1;
-        steer.steerRate = sharpSteerRate;
+        steer.steerRate = sharpSteerRate; 
     }
 
-    public void EndDrift() 
-    {
-        if(drifting) 
-        { 
-            playerAnimation.SetEndDrift();
-            drifting = false;
-        }
-        
-    }    
+
     public void Drifting(float inputDirection)
     {
-        HandleFinishingDrift();
         if(drifting)
         {
             if (Mathf.RoundToInt(inputDirection) == driftInitDirection) { SharpDrift(); }
@@ -85,35 +98,52 @@ public class Drift : MonoBehaviour
         steer.steerRate = normalSteerRate;
         steer.Steering(driftInitDirection);
     }
-
+    public void EndDrift() 
+    {
+        if(drifting) 
+        { 
+            playerAnimation.SetEndDrift();
+            rightDriftParticles.gameObject.SetActive(false);
+            leftDriftParticles.gameObject.SetActive(false);
+            drifting = false;
+            HandleFinishingDrift();
+        }
+    }    
     private void HandleFinishingDrift() 
     {         
-        if(!finishedDrifting && playerAnimation.AnimationHasEnded(playerAnimation.EndDrifting)) 
-        {
-            //drifting = false;
-            finishedDrifting = true;
-            steer.steerRate = steer.baseSteerRate;
-            steer.enabled = true;
-            playerAnimation.EnableMoveAnimations();
-            ActivateDriftBoost();
-        }
+        finishedDrifting = true;
+        steer.steerRate = steer.baseSteerRate;
+        steer.enabled = true;
+        playerAnimation.EnableMoveAnimations();
+        ActivateDriftBoost();
+        Debug.Log("finish drifting");
     }
 
     private void HandleDriftTime() 
     {
         for(int i=0; i < driftTimeThreshold.Length; i++)
         {
-            if(i > driftBoostIndex && Time.time - StartDriftTime > driftTimeThreshold[i])
+            if (i > driftBoostIndex && Time.time - StartDriftTime > driftTimeThreshold[i])
             {
-                Debug.Log("reach drift boost " + i);
+                //Debug.Log("reach drift boost " + i);
                 driftBoostIndex = i;
+            }            
+            if(driftBoostIndex == -1)
+            {
+                rDPMain.startColor = Color.white;
+                lDPMain.startColor = Color.white;
+            }
+            else
+            {
+                rDPMain.startColor = boostColors[driftBoostIndex];
+                lDPMain.startColor = boostColors[driftBoostIndex];
             }
         }
     }
 
     private void ActivateDriftBoost() 
     {
-        Debug.Log("Drift BOOOST " + driftBoostIndex + "!!!");
+        //Debug.Log("Drift BOOOST " + driftBoostIndex + "!!!");
         if(driftBoostIndex == -1) { return; }
         ApplySpeedBoost(driftBoosts[driftBoostIndex], rb, steer.direction);
     }
@@ -121,5 +151,18 @@ public class Drift : MonoBehaviour
     void ApplySpeedBoost(float boost, Rigidbody rb, Vector3 direction)
     {
         rb.AddForce(boost * direction, ForceMode.Impulse);
+        if(speedBoostAnimation == null) { return; }
+        else { StartCoroutine(HandleSpeedBoostAnimation()); }
+        
+    }
+
+    IEnumerator HandleSpeedBoostAnimation()
+    {
+        speedBoostImage.color = boostColors[driftBoostIndex];
+        speedBoostImage.color = new Vector4(speedBoostImage.color.r, speedBoostImage.color.g, speedBoostImage.color.b, .1f);
+
+        speedBoostAnimation.gameObject.SetActive(true);
+        yield return new WaitForSeconds(driftBoostIndex/2 + 1);
+        speedBoostAnimation.gameObject.SetActive(false);
     }
 }

@@ -13,7 +13,7 @@ public class PlayerActionManager : MonoBehaviour
     {
         if(Instance != null && Instance != this) { Destroy(this); return; }
         else { Instance = this; }
-        playerEvents = new PlayerEvents();
+        playerEvents = gameObject.AddComponent<PlayerEvents>();
     }
     private void OnEnable()
     {
