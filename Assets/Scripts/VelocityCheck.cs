@@ -9,7 +9,7 @@ public class VelocityCheck : MonoBehaviour
     private void Awake()
     {
         text = GetComponent<TextMeshProUGUI>();
-        playerRB = GameObject.Find("Player").GetComponent<Rigidbody>();
+        playerRB = GameObject.Find("Player").GetComponentInChildren<Rigidbody>();
     }
 
     private void Update()

@@ -6,19 +6,22 @@ public class Steer : MonoBehaviour
 {
     private Rigidbody rb;
     public Vector3 direction { get; private set; }
+    public Vector3 newDirection { get; private set; }
     public float currentAngle { get; private set; }
     [SerializeField] public float baseSteerRate = 2;
     [SerializeField] public bool limitRotation = false;
     [SerializeField] public float maxRotation = 60;
 
     public float steerRate;
+    Grounding ground;
     private void Awake()
     {
-        rb = GetComponent<Rigidbody>();
+        rb = transform.parent.GetComponentInChildren<Rigidbody>();
         currentAngle = (int) transform.rotation.eulerAngles.y;
         direction = new Vector3(Mathf.Cos(Mathf.Deg2Rad * (currentAngle - 90)), 0,
         Mathf.Sin(Mathf.Deg2Rad * (currentAngle + 90)));
         steerRate = baseSteerRate;
+        ground = GetComponent<Grounding>();
     }
     /// <summary>
     /// Steers player in a given direction to allow turning of corners
@@ -41,9 +44,39 @@ public class Steer : MonoBehaviour
     {
         direction = new Vector3(Mathf.Cos(Mathf.Deg2Rad * (currentAngle - 90)), 0,
         Mathf.Sin(Mathf.Deg2Rad * (currentAngle + 90)));
-        //Debug.Log(direction);
-        Vector3 yVelocity = Vector3.up * rb.velocity.y;
-        Vector3 directionVelocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-        rb.velocity = directionVelocity.magnitude * direction + yVelocity;
+
+
+        
+
+        if(ground.IsGrounded()) 
+        {        
+            rb.velocity = rb.velocity.magnitude * newDirection.normalized;
+            RaycastHit hit;
+            //Debug.Log(direction);
+            Physics.Raycast(transform.position, Vector3.down, out hit, Mathf.Infinity, ground.groundCheckLayerMask);
+            if (Mathf.Abs(direction.z) > 0.5f)
+            {
+                if (direction.z > 0 && direction.x >= 0) { newDirection = new Vector3(direction.x, (Quaternion.Euler(90, 0, 0) * hit.normal).y, direction.z); }
+                else if (direction.z > 0 && direction.x <= 0) { newDirection = new Vector3(direction.x, (Quaternion.Euler(90, 0, 0) * hit.normal).y, direction.z); }
+                else if (direction.z < 0 && direction.x >= 0) { newDirection = new Vector3(direction.x, -1 * (Quaternion.Euler(90, 0, 0) * hit.normal).y, direction.z); }
+                else if (direction.z < 0 && direction.x <= 0) { newDirection = new Vector3(direction.x, -1 * (Quaternion.Euler(90, 0, 0) * hit.normal).y, direction.z); }
+            }
+            else
+            {
+                if (direction.z > 0 && direction.x >= 0) { newDirection = new Vector3(direction.x, -1 * (Quaternion.Euler(0, 0, 90) * hit.normal).y, direction.z); }
+                else if (direction.z > 0 && direction.x <= 0) { newDirection = new Vector3(direction.x, (Quaternion.Euler(0, 0, 90) * hit.normal).y, direction.z); }
+                else if (direction.z < 0 && direction.x >= 0) { newDirection = new Vector3(direction.x, -1 * (Quaternion.Euler(0, 0, 90) * hit.normal).y, direction.z); }
+                else if (direction.z < 0 && direction.x <= 0) { newDirection = new Vector3(direction.x, (Quaternion.Euler(0, 0, 90) * hit.normal).y, direction.z); }
+            }
+            Debug.DrawLine(transform.position, transform.position + newDirection * 10, Color.yellow);
+        }
+        else
+        {
+            newDirection = direction;
+            Vector3 yVelocity = Vector3.up * rb.velocity.y;
+            Vector3 directionVelocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+            rb.velocity = directionVelocity.magnitude * direction + yVelocity;
+        }
+
     }
 }

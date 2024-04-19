@@ -32,7 +32,7 @@ public class Drift : MonoBehaviour
     private void Awake()
     {
         steer = GetComponent<Steer>();
-        rb = GetComponent<Rigidbody>();
+        rb = transform.parent.GetComponentInChildren<Rigidbody>();
         playerAnimation = GetComponent<PlayerAnimation>();
         drifting = false;
         finishedDrifting = true;
@@ -59,7 +59,7 @@ public class Drift : MonoBehaviour
         playerAnimation.SetStartDrift();
         steer.enabled = false;
         SetUpDriftVariables();
-        Debug.Log("start drifting");
+        //Debug.Log("start drifting");
     }
 
     private void SetUpDriftVariables()
@@ -145,7 +145,7 @@ public class Drift : MonoBehaviour
     {
         //Debug.Log("Drift BOOOST " + driftBoostIndex + "!!!");
         if(driftBoostIndex == -1) { return; }
-        ApplySpeedBoost(driftBoosts[driftBoostIndex], rb, steer.direction);
+        ApplySpeedBoost(driftBoosts[driftBoostIndex], rb, steer.newDirection);
     }
 
     void ApplySpeedBoost(float boost, Rigidbody rb, Vector3 direction)

@@ -7,14 +7,22 @@ public class PlayerController : MonoBehaviour
     public PlayerMovement pMovement;
     public Steer pSteer;
     public Drift pDrift;
+    public Grounding ground;
     public PlayerAnimation pAnimation;
+    public SpriteRenderer sprite;
+    public SphereCollider body;
+    public Rigidbody rb;
     
     private void Awake()
     {
         pMovement = GetComponent<PlayerMovement>();
         pSteer = GetComponent<Steer>();
         pDrift = GetComponent<Drift>();
+        ground = GetComponent<Grounding>();
         pAnimation = GetComponent<PlayerAnimation>();
+        sprite = GetComponent<SpriteRenderer>();
+        body = transform.parent.GetComponentInChildren<SphereCollider>();
+        rb = transform.parent.GetComponentInChildren<Rigidbody>();
     }
     private void OnEnable()
     {
@@ -30,9 +38,11 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        sprite.transform.position = body.transform.position + Vector3.up * 0.5f;
         if (!pDrift.drifting) { pSteer.Steering(PlayerActionManager.Instance.moveValue.x); }
+        rb.AddForce(Vector3.down * ground.gravity, ForceMode.Acceleration);
         pDrift.Drifting(PlayerActionManager.Instance.moveValue.x);
-        pMovement.Move(pSteer.direction);
+        pMovement.Move(pSteer.newDirection);
         //pAnimation.HandleAnimation();
     }
 }

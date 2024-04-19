@@ -56,7 +56,7 @@ public class PlayerActionManager : MonoBehaviour
     {
         driftValue = context.ReadValueAsButton();
         playerEvents.onStartDrift?.Invoke(moveValue.x);
-        Debug.Log("action manager drift");
+        //Debug.Log("action manager drift");
     }
 
     public void OnDriftEnd(InputAction.CallbackContext context)
