@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
     }
     public void Move(Vector3 direction)
     {
-        Deccelerate(direction);
+        Decelerate(direction);
         Accelerate(direction);
         Friction(direction);
 
@@ -36,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void Deccelerate(Vector3 direction)
+    public void Decelerate(Vector3 direction)
     {
         // slow to a stop
         if (PlayerActionManager.Instance.moveValue.y < 0)

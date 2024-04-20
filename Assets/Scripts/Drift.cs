@@ -153,7 +153,6 @@ public class Drift : MonoBehaviour
         rb.AddForce(boost * direction, ForceMode.Impulse);
         if(speedBoostAnimation == null) { return; }
         else { StartCoroutine(HandleSpeedBoostAnimation()); }
-        
     }
 
     IEnumerator HandleSpeedBoostAnimation()

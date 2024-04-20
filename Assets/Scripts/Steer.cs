@@ -12,6 +12,7 @@ public class Steer : MonoBehaviour
 
     public float steerRate;
     Grounding ground;
+    SpriteRenderer sprite;
     private void Awake()
     {
         rb = transform.parent.GetComponentInChildren<Rigidbody>();
@@ -20,6 +21,7 @@ public class Steer : MonoBehaviour
         Mathf.Sin(Mathf.Deg2Rad * (XZAngle + 90)));
         steerRate = baseSteerRate;
         ground = GetComponent<Grounding>();
+        sprite = GetComponent<SpriteRenderer>();
     }
     /// <summary>
     /// Steers player in a given direction to allow turning of corners
@@ -27,11 +29,8 @@ public class Steer : MonoBehaviour
     /// <param name="inputDirection">-1,0,1 depending on horizontal input of player </param>
     public void Steering(float inputDirection)
     {
-        Debug.Log("Steering");
-        //if (inputDirection == 0 && transform.eulerAngles.y == XZAngle) { return; }
         XZAngle += Mathf.RoundToInt(inputDirection) * steerRate;
-        //transform.rotation = Quaternion.Euler(0, XZAngle, 0);
-        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, XZAngle, 0), Time.deltaTime * 5);
+        //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, XZAngle, 0), Time.deltaTime * 5);
         //transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, new Vector3(0, XZAngle, 0), Time.deltaTime);
         SetDirection();
         
@@ -52,9 +51,18 @@ public class Steer : MonoBehaviour
             Vector3 projected = Vector3.Project(direction, hit.normal);
             newDirection = (direction - projected).normalized;
             rb.velocity = rb.velocity.magnitude * newDirection;
+            //Debug.DrawLine(transform.position, transform.position + newDirection * 20, Color.yellow);
+            Debug.Log("grounded");
+            float angle = Vector3.Angle(hit.normal, Vector3.up);
+            if(angle < 50)
+            {
+                transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, angle), Time.deltaTime * .75f);
 
-            Debug.DrawLine(transform.position, transform.position + newDirection * 20, Color.yellow);
-            Debug.Log("grounded vel magnitude: " + newDirection);
+            }
+            //Debug.Log("angle: " + angle);
+            //Debug.Log("normal ground vector: " + hit.normal);
+            //Debug.DrawLine(transform.position, transform.position + hit.normal * 20, Color.blue);
+            //Debug.DrawLine(transform.position, transform.position + Vector3.up * 20, Color.cyan);
         }
         else
         {
@@ -63,8 +71,8 @@ public class Steer : MonoBehaviour
             Vector3 directionVelocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
             rb.velocity = directionVelocity.magnitude * direction + yVelocity;
             rb.AddForce(Vector3.down * ground.gravity, ForceMode.Acceleration);
-
             Debug.Log("not grounded");
         }
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(transform.rotation.eulerAngles.x, XZAngle, transform.rotation.eulerAngles.z), Time.deltaTime * 5);
     }
 }

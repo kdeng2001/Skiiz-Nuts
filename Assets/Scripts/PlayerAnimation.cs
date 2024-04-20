@@ -24,13 +24,6 @@ public class PlayerAnimation : MonoBehaviour
         playerAnimator = GetComponentInChildren<Animator>();
         playerSprite = GetComponentInChildren<SpriteRenderer>();
     }
-
-    //public void HandleAnimation() 
-    //{
-    //    //Debug.Log(angle);
-    //    if(PlayerActionManager.Instance.moveValue.y > 0) { SetAccelerate(); }
-    //    else { SetIdle(); }
-    //}
     public void EnableMoveAnimations() { moveAnimations = true; }
     public void DisableMoveAnimations() { moveAnimations = false; }
 
