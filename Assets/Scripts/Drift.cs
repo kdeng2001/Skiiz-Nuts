@@ -163,6 +163,8 @@ public class Drift : MonoBehaviour
 
         speedBoostAnimation.gameObject.SetActive(true);
         yield return new WaitForSeconds(driftBoostIndex/2 + 1);
+
+        // Note: if two speed boosts are activated within the WaitForSeconds time, both will be disabled at the same time after the first speed boost's time runs out
         speedBoostAnimation.gameObject.SetActive(false);
     }
 }

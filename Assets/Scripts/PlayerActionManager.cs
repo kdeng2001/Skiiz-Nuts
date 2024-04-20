@@ -31,6 +31,11 @@ public class PlayerActionManager : MonoBehaviour
                 driftAction.performed += context => OnDriftStart(context);
                 driftAction.canceled += context => OnDriftEnd(context);
             }
+            InputAction debugPause = playerInput.actions["DebugPause"];
+            if (debugPause != null)
+            {
+                debugPause.performed += context => Debug.Break();
+            }
         }
     }
     private void OnDisable()
@@ -48,6 +53,11 @@ public class PlayerActionManager : MonoBehaviour
             {
                 driftAction.performed -= context => OnDriftStart(context);
                 driftAction.canceled -= context => OnDriftEnd(context);
+            }
+            InputAction debugPause = playerInput.actions["DebugPause"];
+            if (debugPause != null)
+            {
+                debugPause.performed -= context => Debug.Break();
             }
         }
     }

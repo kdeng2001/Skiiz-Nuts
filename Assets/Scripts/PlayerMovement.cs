@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Deccelerate(direction);
         Accelerate(direction);
-        DefaultMove(direction);
+        Friction(direction);
 
     }
     public void Accelerate(Vector3 direction)
@@ -30,13 +30,16 @@ public class PlayerMovement : MonoBehaviour
             Vector3 directionVelocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
             if (Mathf.Abs(directionVelocity.magnitude) > maxSpeed) { return; }
             else { rb.AddForce(1 * accelerateForce * direction); }
+
+            //if (Mathf.Abs(rb.velocity.magnitude) > maxSpeed) { return; }
+            //else { rb.AddForce(1 * accelerateForce * direction); Debug.Log("Accelerate"); }
         }
     }
 
     public void Deccelerate(Vector3 direction)
     {
         // slow to a stop
-        if(PlayerActionManager.Instance.moveValue.y < 0)
+        if (PlayerActionManager.Instance.moveValue.y < 0)
         {
             // cannot go backwards
             if (rb.velocity.z == 0) { return; }
@@ -47,19 +50,12 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void DefaultMove(Vector3 direction)
+    public void Friction(Vector3 direction)
     {
         if (PlayerActionManager.Instance.moveValue.y == 0)
         {
             playerAnimation.SetIdle();
-            //if (Mathf.Abs(rb.velocity.magnitude) > defaultSpeed)
-            //{
-            //    rb.AddForce(-1 * accelerateForce * direction);
-            //}
-            //if (Mathf.Abs(rb.velocity.magnitude) < defaultSpeed)
-            //{
-            //    rb.AddForce(1 * accelerateForce * direction);
-            //}
+            if(rb.velocity.magnitude > 0) { rb.AddForce(-1 * accelerateForce * direction /4); }
         }
     }
 }

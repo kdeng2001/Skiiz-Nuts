@@ -40,8 +40,7 @@ public class PlayerController : MonoBehaviour
     {
         sprite.transform.position = body.transform.position + Vector3.up * 0.5f;
         if (!pDrift.drifting) { pSteer.Steering(PlayerActionManager.Instance.moveValue.x); }
-        rb.AddForce(Vector3.down * ground.gravity, ForceMode.Acceleration);
-        pDrift.Drifting(PlayerActionManager.Instance.moveValue.x);
+        if (ground.IsGrounded()) { pDrift.Drifting(PlayerActionManager.Instance.moveValue.x); }
         pMovement.Move(pSteer.newDirection);
         //pAnimation.HandleAnimation();
     }
