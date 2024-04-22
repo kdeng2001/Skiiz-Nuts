@@ -34,7 +34,7 @@ public class PlayerAnimation : MonoBehaviour
             playerAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
         {
             // Animation has ended, do something
-            Debug.Log("Animation ended!");
+            //Debug.Log("Animation ended!");
             return true;
         }
         return false;

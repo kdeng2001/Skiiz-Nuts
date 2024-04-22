@@ -41,13 +41,15 @@ public class Grounding : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     public bool IsGrounded()
-    {
+    {        
+        //Debug.Log(transform.rotation.eulerAngles);
         if (Physics.OverlapBox (groundCheck.position, groundCheckDimensions, transform.rotation, groundCheckLayerMask).Length == 0) 
         {
             //Debug.Log(Physics.OverlapBox(groundCheck.position, groundCheckDimensions, transform.rotation, groundCheckLayerMask));
             return false; 
         }
         //Debug.Log(Physics.OverlapBox(groundCheck.position, groundCheckDimensions, transform.rotation, groundCheckLayerMask));
+
         return true ;
     }
 
