@@ -55,7 +55,7 @@ public class PlayerMovement : MonoBehaviour
         if (PlayerActionManager.Instance.moveValue.y == 0)
         {
             playerAnimation.SetIdle();
-            if(rb.velocity.magnitude > 0) { rb.AddForce(-1 * accelerateForce * direction /4, ForceMode.Acceleration); }
+            //if(rb.velocity.magnitude > 0) { rb.AddForce(-1 * accelerateForce * direction /4, ForceMode.Acceleration); }
         }
     }
 }

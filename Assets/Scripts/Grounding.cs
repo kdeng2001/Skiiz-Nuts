@@ -5,6 +5,7 @@ using UnityEngine;
 public class Grounding : MonoBehaviour
 {
     Rigidbody rb;
+    SphereCollider sphere;
     Steer steer;
     [SerializeField] public int gravity = 30;
     /// <summary>
@@ -27,34 +28,30 @@ public class Grounding : MonoBehaviour
         //TryGetComponent(out rb);
         rb = transform.parent.GetComponentInChildren<Rigidbody>();
         steer = GetComponent<Steer>();
+        sphere = transform.parent.GetComponentInChildren<SphereCollider>();
     }
-
-    //private void FixedUpdate()
-    //{
-    //    Physics.Raycast(transform.position, Vector3.down, out hit, Mathf.Infinity, groundCheckLayerMask);
-    //    Debug.DrawLine(transform.position, transform.position + hit.normal * 10, Color.blue);
-    //    Debug.DrawLine(transform.position, transform.position + Quaternion.Euler(0, 0, 90) * hit.normal * 10, Color.green);
-    //}
 
     /// <summary>
     /// returns true if player is touching ground, else returns false
     /// </summary>
     /// <returns></returns>
-    public bool IsGrounded()
-    {        
-        //Debug.Log(transform.rotation.eulerAngles);
-        if (Physics.OverlapBox (groundCheck.position, groundCheckDimensions, transform.rotation, groundCheckLayerMask).Length == 0) 
-        {
-            //Debug.Log(Physics.OverlapBox(groundCheck.position, groundCheckDimensions, transform.rotation, groundCheckLayerMask));
-            return false; 
-        }
-        //Debug.Log(Physics.OverlapBox(groundCheck.position, groundCheckDimensions, transform.rotation, groundCheckLayerMask));
-
-        return true ;
-    }
-
-    private void OnDrawGizmos()
+    public bool IsGrounded(Vector3 direction)
     {
-        Gizmos.DrawWireCube(groundCheck.position, groundCheckDimensions);
+        //Sometimes, when player is standing still, this function returns both true and false
+        Debug.Log("ground direction: " + direction);
+        RaycastHit hit;
+        if (Physics.SphereCast(groundCheck.position, sphere.radius, direction, out hit, .5f, groundCheckLayerMask))
+        {
+            Debug.Log("grounded");
+            //Debug.Log(Physics.OverlapBox(groundCheck.position, groundCheckDimensions, transform.rotation, groundCheckLayerMask));
+            return true; 
+        }
+        Debug.Log("not grounded");
+        return false;
     }
+
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.DrawWireSphere(groundCheck.position + Vector3.down * .1f, sphere.radius);
+    //}
 }

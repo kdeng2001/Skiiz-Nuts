@@ -35,10 +35,13 @@ public class PlayerController : MonoBehaviour
         PlayerActionManager.Instance.playerEvents.onStartDrift -= pDrift.StartDrift;
         PlayerActionManager.Instance.playerEvents.onEndDrift -= pDrift.EndDrift;
     }
-
+    private void Update()
+    {
+        sprite.transform.position = body.transform.position;
+    }
     void FixedUpdate()
     {
-        sprite.transform.position = body.transform.position + Vector3.up * 0.5f;
+        
         if (!pDrift.drifting) { pSteer.Steering(PlayerActionManager.Instance.moveValue.x); }
         /*if (ground.IsGrounded()) */{ pDrift.Drifting(PlayerActionManager.Instance.moveValue.x); }
         pMovement.Move(pSteer.newDirection);
