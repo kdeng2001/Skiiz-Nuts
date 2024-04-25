@@ -12,7 +12,6 @@ public class Steer : MonoBehaviour
     public float yAngle { get; private set; }
     [SerializeField] public float baseSteerRate = 2;
     public float steerRate;
-
     private void Awake()
     {
         rb = transform.parent.GetComponentInChildren<Rigidbody>();
@@ -44,20 +43,11 @@ public class Steer : MonoBehaviour
         if (Physics.Raycast(transform.position, Vector3.down, out hit, Mathf.Infinity, ground.groundCheckLayerMask) && ground.IsGrounded(transform.up * -1))
         {
             GroundedMovement(hit);
-            //RotatePlayerSpriteZ(hit.normal, direction);
-            //float z = GetAngleFromCamera(hit.normal, newDirection, transform.position);
             float z = GetAngleFromWorld(hit.normal, transform.up, newDirection);
             float x = GetAngleFromWorld(newDirection, transform.forward);
-            //float x = 0;
-            //Debug.Log("x: " + x + " euler x: " + transform.eulerAngles.x + "z: " + x + " euler z: " + transform.eulerAngles.z);
-            //if (Mathf.Abs(z) > 5) { z *= Time.fixedDeltaTime; }
-            //if (Mathf.Abs(x) > 5) { x *= Time.fixedDeltaTime; }
-            //transform.eulerAngles = new(
-            //    transform.eulerAngles.x + x,
-            //    yAngle,
-            //    (transform.eulerAngles.z) + z
-            //    );
-            transform.Rotate(x, yAngle - transform.eulerAngles.y, z);
+            Quaternion targetRotation = Quaternion.Euler(new (transform.eulerAngles.x + x, yAngle, transform.eulerAngles.z + z));
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.fixedDeltaTime);
+            //transform.Rotate(x, yAngle - transform.eulerAngles.y, z);
         }
         else { InAirMovement();  } // horizontal rotation (AD keys)
         RotatePlayerSpriteY();
@@ -85,41 +75,8 @@ public class Steer : MonoBehaviour
         Debug.DrawLine(transform.position, transform.position + 10 * currentDirection, Color.red);
         Debug.DrawLine(transform.position, transform.position + 10 * (targetDirection), Color.green);
         Debug.DrawLine(transform.position, transform.position + 20 * (vertex), Color.yellow);
-        //if (currentDirection.x > targetDirection.x) { return-1 *  angle; }
         return  angle;
-        //return angle;
     }
-
-    //private float GetAngleFromCamera(Vector3 targetDirection, Vector3 currentDirection, Vector3 vertex)
-    //{
-    //    Vector2 normalPoint = Camera.main.WorldToScreenPoint(vertex + targetDirection);
-    //    Vector2 facePoint = Camera.main.WorldToScreenPoint(vertex + currentDirection);
-    //    Vector2 playerPoint = Camera.main.WorldToScreenPoint(vertex);
-    //    Debug.DrawLine(transform.position, vertex + 10 * currentDirection, Color.red);
-    //    Debug.DrawLine(transform.position, vertex + 10 * (targetDirection), Color.green);
-    //    float angle = GetAngle2D(facePoint, normalPoint, playerPoint);
-    //    if (facePoint.x > normalPoint.x) { return angle; }
-    //    else { return -1 * angle; }
-    //    //return angle;
-    //}
-
-    //private void RotatePlayerSpriteZ(Vector3 targetDirection, Vector3 currentDirection)
-    //{
-    //    Vector2 normalPoint = Camera.main.WorldToScreenPoint(transform.position + targetDirection);        
-    //    Vector2 facePoint = Camera.main.WorldToScreenPoint(transform.position + currentDirection);
-    //    Vector2 playerPoint = Camera.main.WorldToScreenPoint(transform.position);
-    //    float angle = GetAngle2D(facePoint, normalPoint, playerPoint);
-    //    if (facePoint.x > normalPoint.x)
-    //    {
-    //        transform.eulerAngles += Vector3.forward * angle * Time.fixedDeltaTime;
-    //        //rb.rotation = Quaternion.Euler(0, rb.rotation.y, angle * Time.fixedDeltaTime * .1f);
-    //    }
-    //    else
-    //    {
-    //        transform.eulerAngles += Vector3.back * angle * Time.fixedDeltaTime;
-    //        //rb.rotation = Quaternion.Euler(0, rb.rotation.y, -1 * angle * Time.fixedDeltaTime * .1f);
-    //    }
-    //}    
     private float GetAngle2D(Vector2 p1, Vector2 p2, Vector2 vertex) 
     {
         return (Vector2.Angle(p1 - vertex, p2 - vertex));
@@ -136,12 +93,6 @@ public class Steer : MonoBehaviour
         Vector3 projected = Vector3.Project(direction, ground.normal);
         newDirection = (direction - projected).normalized;
         rb.velocity = rb.velocity.magnitude * newDirection;
-
-        //rb.velocity = rb.velocity.magnitude * direction;
-        //transform.eulerAngles = new(newDirection.x, transform.eulerAngles.y, transform.eulerAngles.z);
-        //transform.up = ground.normal;
-        //Debug.DrawLine(transform.position, transform.position + 10 * newDirection, Color.yellow);
-        //Debug.DrawLine(transform.position, transform.position + 10 * ground.normal, Color.blue);
     }
 
     private void InAirMovement()
