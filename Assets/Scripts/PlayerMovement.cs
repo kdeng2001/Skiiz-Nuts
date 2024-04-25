@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     PlayerAnimation playerAnimation;
     Rigidbody rb;
+    Grounding ground;
     [SerializeField] public float accelerateForce = 10f;
     [SerializeField] public float deccelerateForce = 10f;
     [SerializeField] public float maxSpeed = 10f;
@@ -14,12 +15,14 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = transform.parent.GetComponentInChildren<Rigidbody>();
         playerAnimation = GetComponent<PlayerAnimation>();
+        ground = GetComponent<Grounding>();
     }
     public void Move(Vector3 direction)
     {
         Decelerate(direction);
         Accelerate(direction);
         Friction(direction);
+        rb.AddForce(Vector3.down * ground.gravity * 5f, ForceMode.Acceleration); // gravity
 
     }
     public void Accelerate(Vector3 direction)
@@ -48,7 +51,6 @@ public class PlayerMovement : MonoBehaviour
             else if (rb.velocity.z > 0f && direction.z < 0) { rb.velocity = Vector3.zero; return; }
             Debug.Log("backing up");
             rb.AddForce(-2 * deccelerateForce * direction, ForceMode.Acceleration);
-            //rb.AddTorque(-2 * 10 * deccelerateForce * direction, ForceMode.Acceleration);
         }
     }
 

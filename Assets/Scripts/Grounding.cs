@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class Grounding : MonoBehaviour
 {
-    Rigidbody rb;
-    SphereCollider sphere;
-    Steer steer;
     [SerializeField] public int gravity = 30;
     /// <summary>
     /// Transform under player
@@ -20,16 +17,6 @@ public class Grounding : MonoBehaviour
     /// layers that are considered "ground"
     /// </summary>
     [SerializeField] public LayerMask groundCheckLayerMask;
-    private RaycastHit hit;
-    Vector3 newDirection;
-
-    private void Awake()
-    {
-        //TryGetComponent(out rb);
-        rb = transform.parent.GetComponentInChildren<Rigidbody>();
-        steer = GetComponent<Steer>();
-        sphere = transform.parent.GetComponentInChildren<SphereCollider>();
-    }
 
     /// <summary>
     /// returns true if player is touching ground, else returns false
@@ -37,21 +24,14 @@ public class Grounding : MonoBehaviour
     /// <returns></returns>
     public bool IsGrounded(Vector3 direction)
     {
-        //Sometimes, when player is standing still, this function returns both true and false
-        //Debug.Log("ground direction: " + direction);
         RaycastHit hit;
         Debug.DrawRay(groundCheck.position, direction * 2f);
         if (Physics.Raycast(groundCheck.position, direction, out hit, 2f, groundCheckLayerMask))
         {
-            //Debug.DrawLine(hit.point, hit.normal * 20, Color.cyan);
-            //Debug.Log("grounded");
-            //Debug.Log(Physics.OverlapBox(groundCheck.position, groundCheckDimensions, transform.rotation, groundCheckLayerMask));
             return true; 
         }
-        //Debug.Log("not grounded");
         return false;
     }
-
     //private void OnDrawGizmos()
     //{
     //    Gizmos.DrawWireSphere(groundCheck.position + Vector3.down * .1f, sphere.radius);

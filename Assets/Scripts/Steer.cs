@@ -31,7 +31,6 @@ public class Steer : MonoBehaviour
         yAngle += Mathf.RoundToInt(inputDirection) * steerRate;
         SetDirection(inputDirection);
         //SphereDebug();
-        //Debug.DrawLine(transform.position, transform.position + 5 * direction, Color.cyan);
     }
 
     public void SetDirection(float inputDirection)
@@ -47,39 +46,24 @@ public class Steer : MonoBehaviour
             float x = GetAngleFromWorld(newDirection, transform.forward);
             Quaternion targetRotation = Quaternion.Euler(new (transform.eulerAngles.x + x, yAngle, transform.eulerAngles.z + z));
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.fixedDeltaTime);
-            //transform.Rotate(x, yAngle - transform.eulerAngles.y, z);
         }
-        else { InAirMovement();  } // horizontal rotation (AD keys)
+        else { InAirMovement();  } 
+        // horizontal rotation (AD keys)
         RotatePlayerSpriteY();
-        rb.AddForce(Vector3.down * ground.gravity * 5f, ForceMode.Acceleration); // gravity
     }
 
     private float GetAngleFromWorld(Vector3 targetDirection, Vector3 currentDirection)
     {
-        //Debug.Log("transform forward: " + currentDirection + ", targetDirection: " + (targetDirection - transform.position));
         Vector3 axis = Vector3.Cross(currentDirection, targetDirection);
         float angle = Vector3.SignedAngle(currentDirection, targetDirection, axis);
-        //Debug.DrawLine(transform.position, transform.position + 10 * currentDirection, Color.red);
-        //Debug.DrawLine(transform.position, transform.position + 10 * (targetDirection), Color.green);
-        //Debug.DrawLine(transform.position, transform.position + 20 * (axis), Color.yellow);
         if (currentDirection.y > targetDirection.y) { return angle; }
         return -1 * angle;
-        //return angle;
     }
 
-    private float GetAngleFromWorld(Vector3 targetDirection, Vector3 currentDirection, Vector3 vertex)
+    private float GetAngleFromWorld(Vector3 targetDirection, Vector3 currentDirection, Vector3 axis)
     {
-        
-        float angle = Vector3.SignedAngle(currentDirection, targetDirection, vertex);
-        Debug.Log("transform up: " + currentDirection + ", targetDirection: " + (targetDirection) + ", angle: " + angle);
-        Debug.DrawLine(transform.position, transform.position + 10 * currentDirection, Color.red);
-        Debug.DrawLine(transform.position, transform.position + 10 * (targetDirection), Color.green);
-        Debug.DrawLine(transform.position, transform.position + 20 * (vertex), Color.yellow);
+        float angle = Vector3.SignedAngle(currentDirection, targetDirection, axis);
         return  angle;
-    }
-    private float GetAngle2D(Vector2 p1, Vector2 p2, Vector2 vertex) 
-    {
-        return (Vector2.Angle(p1 - vertex, p2 - vertex));
     }
     private void SphereDebug()
     {
