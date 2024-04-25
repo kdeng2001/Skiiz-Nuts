@@ -38,15 +38,17 @@ public class Grounding : MonoBehaviour
     public bool IsGrounded(Vector3 direction)
     {
         //Sometimes, when player is standing still, this function returns both true and false
-        Debug.Log("ground direction: " + direction);
+        //Debug.Log("ground direction: " + direction);
         RaycastHit hit;
-        if (Physics.SphereCast(groundCheck.position, sphere.radius, direction, out hit, .5f, groundCheckLayerMask))
+        Debug.DrawRay(groundCheck.position, direction * 2f);
+        if (Physics.Raycast(groundCheck.position, direction, out hit, 2f, groundCheckLayerMask))
         {
-            Debug.Log("grounded");
+            //Debug.DrawLine(hit.point, hit.normal * 20, Color.cyan);
+            //Debug.Log("grounded");
             //Debug.Log(Physics.OverlapBox(groundCheck.position, groundCheckDimensions, transform.rotation, groundCheckLayerMask));
             return true; 
         }
-        Debug.Log("not grounded");
+        //Debug.Log("not grounded");
         return false;
     }
 

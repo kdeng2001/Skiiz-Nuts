@@ -29,10 +29,11 @@ public class PlayerMovement : MonoBehaviour
             playerAnimation.SetAccelerate();
             Vector3 directionVelocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
             if (Mathf.Abs(directionVelocity.magnitude) > maxSpeed) { return; }
-            else { rb.AddForce(1 * accelerateForce * direction, ForceMode.Acceleration); }
+            //else { rb.AddForce(1 * accelerateForce * direction, ForceMode.Acceleration); }
+            //else { rb.AddTorque(1 * 10 * accelerateForce * direction, ForceMode.Acceleration); }
 
             //if (Mathf.Abs(rb.velocity.magnitude) > maxSpeed) { return; }
-            //else { rb.AddForce(1 * accelerateForce * direction); Debug.Log("Accelerate"); }
+            else { rb.AddForce(1 * accelerateForce * direction, ForceMode.Acceleration); Debug.Log("Accelerate"); }
         }
     }
 
@@ -47,6 +48,7 @@ public class PlayerMovement : MonoBehaviour
             else if (rb.velocity.z > 0f && direction.z < 0) { rb.velocity = Vector3.zero; return; }
             Debug.Log("backing up");
             rb.AddForce(-2 * deccelerateForce * direction, ForceMode.Acceleration);
+            //rb.AddTorque(-2 * 10 * deccelerateForce * direction, ForceMode.Acceleration);
         }
     }
 
