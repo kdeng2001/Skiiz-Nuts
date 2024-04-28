@@ -13855,6 +13855,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c62d0800238d5024faf1b1bfd658c30f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  driftSlowRate: 0.75
   sharpSteerRate: 2.5
   normalSteerRate: 1.5
   wideSteerRate: 0.5
@@ -13868,7 +13869,6 @@ MonoBehaviour:
   - 20
   rightDriftParticles: {fileID: 1159378704}
   leftDriftParticles: {fileID: 404851618}
-  speedBoostParticles: {fileID: 0}
   speedBoostAnimation: {fileID: 1537437028}
   boostColors:
   - {r: 0.25943398, g: 0.8541311, b: 1, a: 1}
@@ -13910,7 +13910,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d1b7df760674e84e8b70a5d96b59e9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseSteerRate: 0.8
+  baseSteerRate: 1
   steerRate: 0
 --- !u!114 &1295614210
 MonoBehaviour:
@@ -13960,9 +13960,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   accelerateForce: 10
+  defaultAccelerateForce: 10
   deccelerateForce: 10
+  maintainForceRate: 0.25
   maxSpeed: 30
-  defaultSpeed: 5
+  defaultMaxSpeed: 30
+  downSlopeBonusRate: 3
+  upSlopeBonusRate: 1.5
 --- !u!114 &1295614213
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15150,6 +15154,7 @@ GameObject:
   - component: {fileID: 1537437026}
   - component: {fileID: 1537437025}
   - component: {fileID: 1537437028}
+  - component: {fileID: 1537437029}
   m_Layer: 5
   m_Name: SpeedBoostUI
   m_TagString: Untagged
@@ -15247,6 +15252,20 @@ MonoBehaviour:
   spritePerFrame: 10
   loop: 1
   destroyOnEnd: 0
+--- !u!114 &1537437029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1537437023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1d2826bf09d34e4daff22558505fd8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeElapsed: 0
+  durationTime: 0
 --- !u!1001 &1543978860
 PrefabInstance:
   m_ObjectHideFlags: 0
