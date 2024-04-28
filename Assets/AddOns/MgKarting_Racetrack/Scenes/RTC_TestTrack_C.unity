@@ -13910,7 +13910,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d1b7df760674e84e8b70a5d96b59e9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseSteerRate: 1
+  baseSteerRate: 0.8
   steerRate: 0
 --- !u!114 &1295614210
 MonoBehaviour:

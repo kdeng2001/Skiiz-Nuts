@@ -83,8 +83,8 @@ public class PlayerMovement : MonoBehaviour
     private void AdjustSlopeMaxSpeed(Vector3 direction) 
     {
         slopeBonusSpeed = direction.y * -1 * 10;
-        //if (direction.y < 0) { slopeBonusSpeed *= downSlopeBonusRate; }
-        //else { slopeBonusSpeed *= upSlopeBonusRate; }
+        if (direction.y < 0) { slopeBonusSpeed *= downSlopeBonusRate; }
+        else { slopeBonusSpeed *= upSlopeBonusRate; }
         Debug.Log("slopeBonusSpeed" + (slopeBonusSpeed + maxSpeed));
     }
 }

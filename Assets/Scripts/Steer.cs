@@ -84,11 +84,12 @@ public class Steer : MonoBehaviour
 
     private void InAirMovement()
     {
-        newDirection = direction;
+        //newDirection = direction;
         Vector3 yVelocity = Vector3.up * rb.velocity.y;
-        Vector3 directionVelocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+        Vector3 xzVelocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+        newDirection = (xzVelocity + yVelocity).normalized;
         //rb.velocity = directionVelocity.magnitude * direction + yVelocity;
-        //rb.AddForce(-rb.velocity + rb.velocity.magnitude * direction + yVelocity, ForceMode.VelocityChange);
+        rb.AddForce(-rb.velocity + xzVelocity.magnitude * direction + yVelocity, ForceMode.VelocityChange);
     }
     private void RotatePlayerSpriteY() { transform.eulerAngles = new(transform.eulerAngles.x, yAngle, transform.eulerAngles.z); }
 }

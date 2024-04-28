@@ -67,7 +67,7 @@ public class Drift : MonoBehaviour
     public void StartDrift(float inputDirection) 
     {
         if(inputDirection == 0) { Debug.Log("drift needs direction"); return; }
-        if(inputDirection == -1) { leftDriftParticles.gameObject.SetActive(true); }
+        if(inputDirection > 0) { leftDriftParticles.gameObject.SetActive(true); }
         else { rightDriftParticles.gameObject.SetActive(true); }
         driftInitDirection = Mathf.RoundToInt(inputDirection);
         playerAnimation.DisableMoveAnimations();
