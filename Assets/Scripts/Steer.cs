@@ -10,6 +10,7 @@ public class Steer : MonoBehaviour
     public Vector3 direction { get; private set; }
     public Vector3 newDirection { get; private set; }
     public float yAngle { get; private set; }
+    [Tooltip("The base rate at which the player can steer left or right. This variable should not be modified.")]
     [SerializeField] public float baseSteerRate = 2;
     public float steerRate;
     private void Awake()
@@ -30,7 +31,7 @@ public class Steer : MonoBehaviour
         if (yAngle < 360) { yAngle = yAngle + 360; }
         yAngle += Mathf.RoundToInt(inputDirection) * steerRate;
         SetDirection(inputDirection);
-        //SphereDebug();
+        SphereDebug();
     }
 
     public void SetDirection(float inputDirection)
@@ -42,6 +43,7 @@ public class Steer : MonoBehaviour
         if (Physics.Raycast(transform.position, Vector3.down, out hit, Mathf.Infinity, ground.groundCheckLayerMask) && ground.IsGrounded(transform.up * -1))
         {
             GroundedMovement(hit);
+            // X and Z axis rotation depending on ground
             float z = GetAngleFromWorld(hit.normal, transform.up, newDirection);
             float x = GetAngleFromWorld(newDirection, transform.forward);
             Quaternion targetRotation = Quaternion.Euler(new (transform.eulerAngles.x + x, yAngle, transform.eulerAngles.z + z));
@@ -76,7 +78,8 @@ public class Steer : MonoBehaviour
     {
         Vector3 projected = Vector3.Project(direction, ground.normal);
         newDirection = (direction - projected).normalized;
-        rb.velocity = rb.velocity.magnitude * newDirection;
+        //rb.velocity = rb.velocity.magnitude * newDirection;
+        rb.AddForce(-rb.velocity + rb.velocity.magnitude * newDirection, ForceMode.VelocityChange);
     }
 
     private void InAirMovement()
@@ -84,7 +87,8 @@ public class Steer : MonoBehaviour
         newDirection = direction;
         Vector3 yVelocity = Vector3.up * rb.velocity.y;
         Vector3 directionVelocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-        rb.velocity = directionVelocity.magnitude * direction + yVelocity;
+        //rb.velocity = directionVelocity.magnitude * direction + yVelocity;
+        //rb.AddForce(-rb.velocity + rb.velocity.magnitude * direction + yVelocity, ForceMode.VelocityChange);
     }
     private void RotatePlayerSpriteY() { transform.eulerAngles = new(transform.eulerAngles.x, yAngle, transform.eulerAngles.z); }
 }

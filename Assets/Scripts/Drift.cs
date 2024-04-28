@@ -8,32 +8,46 @@ public class Drift : MonoBehaviour
     PlayerAnimation playerAnimation;
     Steer steer;
     Rigidbody rb;
+    PlayerMovement playerMovement;
     public bool drifting { get; private set; }
     public bool finishedDrifting { get; private set; }
     public float StartDriftTime { get; private set; }
     public int driftInitDirection { get; private set; }
+    [Tooltip("Multiplier that decreases acceleration and maxBaseSpeed (from ordinary movement) while drifting.")]
+    [SerializeField] float driftSlowRate = .75f;
     
+    [Tooltip("Rate the player steers when drifting while holding the same direction the drift was initiated.")]
     [SerializeField] public float sharpSteerRate = 4;
+    [Tooltip("Rate the player steers when drifting and releasing any direction key.")]
     [SerializeField] public float normalSteerRate = 2;
+    [Tooltip("Rate the player steers when drifting while holding the opposite direction the drift was initiated.")]
     [SerializeField] public float wideSteerRate = 1;
+    [Tooltip("Time  it takes to reach each level of drift boost.")]
     [SerializeField] public float[] driftTimeThreshold = { 0,1,2 };
+    [Tooltip("Accelerating force applied depending on time elapsed while drifting and driftTimeThresold.")]
     [SerializeField] public float[] driftBoosts = { 0,0,0 };
     private int driftBoostIndex;
 
+    [Tooltip("drift particles that appear on the right of player.")]
     [SerializeField] ParticleSystem rightDriftParticles;
     ParticleSystem.MainModule rDPMain;
+    [Tooltip("drift particles that appear on the left of player.")]
     [SerializeField] ParticleSystem leftDriftParticles;
     ParticleSystem.MainModule lDPMain;
-    [SerializeField] ParticleSystem speedBoostParticles;
-
+    [Tooltip("Speedboost UI effect.")]
     [SerializeField] ImageAnimation speedBoostAnimation;
-    private Image speedBoostImage; 
-    public Color[] boostColors;
+    private Image speedBoostImage;
+    private SpeedBoost speedBoost;
+    [Tooltip("Color of speed boost and drift particles while drifting, depending on time elapsed and driftTimeThreshold.")]
+    [SerializeField] public Color[] boostColors;
+
+
     private void Awake()
     {
         steer = GetComponent<Steer>();
         rb = transform.parent.GetComponentInChildren<Rigidbody>();
         playerAnimation = GetComponent<PlayerAnimation>();
+        playerMovement = GetComponent<PlayerMovement>();
         drifting = false;
         finishedDrifting = true;
 
@@ -45,6 +59,7 @@ public class Drift : MonoBehaviour
         if(speedBoostAnimation != null) 
         {
             speedBoostImage = speedBoostAnimation.gameObject.GetComponent<Image>();
+            speedBoost = speedBoostImage.GetComponent<SpeedBoost>();
             speedBoostAnimation.gameObject.SetActive(false); 
         }
     }
@@ -69,6 +84,8 @@ public class Drift : MonoBehaviour
         StartDriftTime = Time.time;
         driftBoostIndex = -1;
         steer.steerRate = sharpSteerRate; 
+        playerMovement.maxSpeed = playerMovement.maxSpeed * driftSlowRate;
+        playerMovement.accelerateForce = playerMovement.accelerateForce * driftSlowRate;
     }
 
 
@@ -86,6 +103,7 @@ public class Drift : MonoBehaviour
     {
         steer.steerRate = sharpSteerRate;
         steer.Steering(driftInitDirection); 
+
     }
     private void WideDrift() 
     {
@@ -113,6 +131,8 @@ public class Drift : MonoBehaviour
     {         
         finishedDrifting = true;
         steer.steerRate = steer.baseSteerRate;
+        playerMovement.maxSpeed = playerMovement.defaultMaxSpeed;
+        playerMovement.accelerateForce = playerMovement.defaultAccelerateForce;
         steer.enabled = true;
         playerAnimation.EnableMoveAnimations();
         ActivateDriftBoost();
@@ -152,18 +172,13 @@ public class Drift : MonoBehaviour
     {
         rb.AddForce(boost * direction, ForceMode.Impulse);
         if(speedBoostAnimation == null) { return; }
-        else { StartCoroutine(HandleSpeedBoostAnimation()); }
-    }
-
-    IEnumerator HandleSpeedBoostAnimation()
-    {
-        speedBoostImage.color = boostColors[driftBoostIndex];
-        speedBoostImage.color = new Vector4(speedBoostImage.color.r, speedBoostImage.color.g, speedBoostImage.color.b, .1f);
-
-        speedBoostAnimation.gameObject.SetActive(true);
-        yield return new WaitForSeconds(driftBoostIndex/2 + 1);
-
-        // Note: if two speed boosts are activated within the WaitForSeconds time, both will be disabled at the same time after the first speed boost's time runs out
-        speedBoostAnimation.gameObject.SetActive(false);
+        else 
+        { 
+            speedBoostImage.color = boostColors[driftBoostIndex];
+            speedBoostImage.color = new Vector4(speedBoostImage.color.r, speedBoostImage.color.g, speedBoostImage.color.b, .1f);
+            speedBoost.SetTimeElapsed(0);
+            speedBoost.SetDurationTime(driftBoostIndex / 2 + 1);
+            speedBoost.gameObject.SetActive(true);
+        }
     }
 }

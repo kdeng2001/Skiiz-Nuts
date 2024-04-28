@@ -45,7 +45,5 @@ public class PlayerController : MonoBehaviour
         if (!pDrift.drifting) { pSteer.Steering(PlayerActionManager.Instance.moveValue.x); }
         /*if (ground.IsGrounded()) */{ pDrift.Drifting(PlayerActionManager.Instance.moveValue.x); }
         pMovement.Move(pSteer.newDirection);
-        //pMovement.Move(pSteer.direction);
-        //pMovement.Move(Vector3.forward);
     }
 }

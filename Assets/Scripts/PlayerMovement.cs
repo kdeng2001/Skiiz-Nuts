@@ -7,10 +7,24 @@ public class PlayerMovement : MonoBehaviour
     PlayerAnimation playerAnimation;
     Rigidbody rb;
     Grounding ground;
+    [Tooltip("The amount of forward force exerted in each fixed frame until reaching maxSpeed.")]
     [SerializeField] public float accelerateForce = 10f;
+    [Tooltip("The amount of forward force exerted by default. This variable should not be modified.")]
+    [SerializeField] public float defaultAccelerateForce = 10f;
+    [Tooltip("The amount of backward force exerted in each fixed frame until reaching a stop.")]
     [SerializeField] public float deccelerateForce = 10f;
+    [Tooltip("A multiplier that decreases the amount of force exerted when moving at speeds greater than the maxSpeed plus any bonus.")]
+    [SerializeField] public float maintainForceRate = .25f;
+    [Tooltip("The maximum amount of speed the player can achieve with acceleration on a flat surface.")]
     [SerializeField] public float maxSpeed = 10f;
-    [SerializeField] public float defaultSpeed = 5f;
+    [Tooltip("The default maxSpeed value. This variable should not be modified.")]
+    [SerializeField] public float defaultMaxSpeed = 10f;
+
+    private float slopeBonusSpeed = 0;
+    [Tooltip("A bonus multiplier to maxSpeed that allows greater speed downhill to a certain extent, depending on the angle of the slope.")]
+    [SerializeField] float downSlopeBonusRate = 1.25f;
+    [Tooltip("A bonus multiplier to maxSpeed that allows lesser speed uphill to a certain extent, depending on the angle of the slope.")]
+    [SerializeField] float upSlopeBonusRate = 0.5f;
     private void Awake()
     {
         rb = transform.parent.GetComponentInChildren<Rigidbody>();
@@ -19,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
     }
     public void Move(Vector3 direction)
     {
+        AdjustSlopeMaxSpeed(direction);
         Decelerate(direction);
         Accelerate(direction);
         Friction(direction);
@@ -31,12 +46,14 @@ public class PlayerMovement : MonoBehaviour
         {
             playerAnimation.SetAccelerate();
             Vector3 directionVelocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-            if (Mathf.Abs(directionVelocity.magnitude) > maxSpeed) { return; }
-            //else { rb.AddForce(1 * accelerateForce * direction, ForceMode.Acceleration); }
-            //else { rb.AddTorque(1 * 10 * accelerateForce * direction, ForceMode.Acceleration); }
-
-            //if (Mathf.Abs(rb.velocity.magnitude) > maxSpeed) { return; }
-            else { rb.AddForce(1 * accelerateForce * direction, ForceMode.Acceleration); Debug.Log("Accelerate"); }
+            if (Mathf.Abs(directionVelocity.magnitude) > maxSpeed + slopeBonusSpeed) 
+            { 
+                rb.AddForce(maintainForceRate * accelerateForce * direction, ForceMode.Acceleration); 
+            }
+            else 
+            { 
+                rb.AddForce(1 * accelerateForce * direction, ForceMode.Acceleration); Debug.Log("Accelerate"); 
+            }
         }
     }
 
@@ -45,21 +62,29 @@ public class PlayerMovement : MonoBehaviour
         // slow to a stop
         if (PlayerActionManager.Instance.moveValue.y < 0)
         {
-            // cannot go backwards
-            if (rb.velocity.z == 0) { return; }
-            else if (rb.velocity.z < 0f && direction.z > 0) { rb.velocity = Vector3.zero; return; }
-            else if (rb.velocity.z > 0f && direction.z < 0) { rb.velocity = Vector3.zero; return; }
-            Debug.Log("backing up");
-            rb.AddForce(-2 * deccelerateForce * direction, ForceMode.Acceleration);
+            if (rb.velocity.magnitude < 1) { rb.velocity = Vector3.zero; return; }
+            rb.AddForce(-1f * deccelerateForce * direction, ForceMode.Acceleration);
         }
     }
 
     public void Friction(Vector3 direction)
     {
+        if (rb.velocity.magnitude > 0 && !(PlayerActionManager.Instance.moveValue.y < 0)) 
+        { 
+            rb.AddForce(-1 * accelerateForce * direction * .1f * rb.velocity.magnitude * .1f, ForceMode.Acceleration); 
+        }
         if (PlayerActionManager.Instance.moveValue.y == 0)
         {
             playerAnimation.SetIdle();
-            //if(rb.velocity.magnitude > 0) { rb.AddForce(-1 * accelerateForce * direction /4, ForceMode.Acceleration); }
+            
         }
+    }
+
+    private void AdjustSlopeMaxSpeed(Vector3 direction) 
+    {
+        slopeBonusSpeed = direction.y * -1 * 10;
+        //if (direction.y < 0) { slopeBonusSpeed *= downSlopeBonusRate; }
+        //else { slopeBonusSpeed *= upSlopeBonusRate; }
+        Debug.Log("slopeBonusSpeed" + (slopeBonusSpeed + maxSpeed));
     }
 }
