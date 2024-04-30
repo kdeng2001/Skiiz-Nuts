@@ -1575,7 +1575,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -8304,7 +8304,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -13500,7 +13500,8 @@ MonoBehaviour:
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -13776,9 +13777,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   accelerateForce: 10
+  defaultAccelerateForce: 10
   deccelerateForce: 10
+  maintainForceRate: 0.25
   maxSpeed: 30
-  defaultSpeed: 5
+  defaultMaxSpeed: 10
+  downSlopeBonusRate: 1.25
+  upSlopeBonusRate: 0.5
 --- !u!114 &1295614208
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13794,7 +13799,11 @@ MonoBehaviour:
   pMovement: {fileID: 0}
   pSteer: {fileID: 0}
   pDrift: {fileID: 0}
+  ground: {fileID: 0}
   pAnimation: {fileID: 0}
+  sprite: {fileID: 0}
+  body: {fileID: 0}
+  rb: {fileID: 0}
 --- !u!114 &1295614209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13823,8 +13832,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseSteerRate: 0.8
-  limitRotation: 0
-  maxRotation: 30
   steerRate: 0
 --- !u!114 &1295614211
 MonoBehaviour:
@@ -13862,6 +13869,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c62d0800238d5024faf1b1bfd658c30f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  driftSlowRate: 0.75
   sharpSteerRate: 2.5
   normalSteerRate: 1.5
   wideSteerRate: 0.5
@@ -13875,7 +13883,6 @@ MonoBehaviour:
   - 20
   rightDriftParticles: {fileID: 1159378704}
   leftDriftParticles: {fileID: 404851618}
-  speedBoostParticles: {fileID: 0}
   speedBoostAnimation: {fileID: 1537437028}
   boostColors:
   - {r: 0.25943398, g: 0.8541311, b: 1, a: 1}
@@ -16660,7 +16667,8 @@ MonoBehaviour:
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:

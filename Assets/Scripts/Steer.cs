@@ -91,6 +91,9 @@ public class Steer : MonoBehaviour
         //rb.velocity = directionVelocity.magnitude * direction + yVelocity;
         rb.AddForce(-rb.velocity + xzVelocity.magnitude * direction + yVelocity, ForceMode.VelocityChange);
     }
-    private void RotatePlayerSpriteY() { transform.eulerAngles = new(transform.eulerAngles.x, yAngle, transform.eulerAngles.z); }
+    private void RotatePlayerSpriteY() 
+    { 
+        transform.eulerAngles = new(transform.eulerAngles.x, yAngle, transform.eulerAngles.z);
+    }
 }
 

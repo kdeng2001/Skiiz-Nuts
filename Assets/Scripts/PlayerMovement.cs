@@ -85,6 +85,6 @@ public class PlayerMovement : MonoBehaviour
         slopeBonusSpeed = direction.y * -1 * 10;
         if (direction.y < 0) { slopeBonusSpeed *= downSlopeBonusRate; }
         else { slopeBonusSpeed *= upSlopeBonusRate; }
-        Debug.Log("slopeBonusSpeed" + (slopeBonusSpeed + maxSpeed));
+        //Debug.Log("slopeBonusSpeed" + (slopeBonusSpeed + maxSpeed));
     }
 }

@@ -12,7 +12,8 @@ public class PlayerController : MonoBehaviour
     public SpriteRenderer sprite;
     public SphereCollider body;
     public Rigidbody rb;
-    
+
+    bool testStart = true;
     private void Awake()
     {
         pMovement = GetComponent<PlayerMovement>();
@@ -37,6 +38,8 @@ public class PlayerController : MonoBehaviour
     }
     private void Update()
     {
+        //if(testStart && PlayerActionManager.Instance.moveValue.x > 0) { testStart = false; }
+        //if(Mathf.Abs(rb.velocity.x) <= 0 && Mathf.Abs(rb.velocity.y) <= 0 && !testStart) { Debug.Break(); }
         sprite.transform.position = body.transform.position;
     }
     void FixedUpdate()
