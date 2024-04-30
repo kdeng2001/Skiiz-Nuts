@@ -25,8 +25,8 @@ public class Grounding : MonoBehaviour
     public bool IsGrounded(Vector3 direction)
     {
         RaycastHit hit;
-        Debug.DrawRay(groundCheck.position, direction * 2f);
-        if (Physics.Raycast(groundCheck.position, direction, out hit, 2f, groundCheckLayerMask))
+        Debug.DrawRay(groundCheck.position, direction * 1.5f);
+        if (Physics.Raycast(groundCheck.position, direction, out hit, 1.5f, groundCheckLayerMask))
         {
             return true; 
         }

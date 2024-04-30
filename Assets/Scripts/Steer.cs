@@ -31,7 +31,7 @@ public class Steer : MonoBehaviour
         if (yAngle < 360) { yAngle = yAngle + 360; }
         yAngle += Mathf.RoundToInt(inputDirection) * steerRate;
         SetDirection(inputDirection);
-        SphereDebug();
+        //SphereDebug();
     }
 
     public void SetDirection(float inputDirection)
@@ -48,6 +48,11 @@ public class Steer : MonoBehaviour
             float x = GetAngleFromWorld(newDirection, transform.forward);
             Quaternion targetRotation = Quaternion.Euler(new (transform.eulerAngles.x + x, yAngle, transform.eulerAngles.z + z));
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.fixedDeltaTime);
+
+
+
+            Debug.DrawLine(transform.position, transform.position + 10 * transform.forward, Color.red);
+            Debug.DrawLine(transform.position, transform.position + 15 * newDirection, Color.blue);
         }
         else { InAirMovement();  } 
         // horizontal rotation (AD keys)
@@ -74,6 +79,10 @@ public class Steer : MonoBehaviour
         Debug.DrawLine(transform.position, transform.position + 10 * rb.transform.right, Color.blue);
     }
     
+    private void OtherDebugs()
+    {
+        Debug.DrawLine(transform.position, transform.position + 10 * transform.forward, Color.red);
+    }
     private void GroundedMovement(RaycastHit ground)
     {
         Vector3 projected = Vector3.Project(direction, ground.normal);
