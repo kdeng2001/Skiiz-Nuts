@@ -38,13 +38,10 @@ public class PlayerController : MonoBehaviour
     }
     private void Update()
     {
-        //if(testStart && PlayerActionManager.Instance.moveValue.x > 0) { testStart = false; }
-        //if(Mathf.Abs(rb.velocity.x) <= 0 && Mathf.Abs(rb.velocity.y) <= 0 && !testStart) { Debug.Break(); }
         sprite.transform.position = body.transform.position;
     }
     void FixedUpdate()
     {
-        
         if (!pDrift.drifting) { pSteer.Steering(PlayerActionManager.Instance.moveValue.x); }
         /*if (ground.IsGrounded()) */{ pDrift.Drifting(PlayerActionManager.Instance.moveValue.x); }
         pMovement.Move(pSteer.newDirection);

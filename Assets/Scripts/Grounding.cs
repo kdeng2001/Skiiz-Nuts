@@ -17,23 +17,21 @@ public class Grounding : MonoBehaviour
     /// layers that are considered "ground"
     /// </summary>
     [SerializeField] public LayerMask groundCheckLayerMask;
-
+    /// <summary>
+    /// Length of ray that checks for ground
+    /// </summary>
+    [SerializeField] public float rayLength = 1.5f;
     /// <summary>
     /// returns true if player is touching ground, else returns false
     /// </summary>
-    /// <returns></returns>
     public bool IsGrounded(Vector3 direction)
     {
         RaycastHit hit;
-        Debug.DrawRay(groundCheck.position, direction * 1.5f);
-        if (Physics.Raycast(groundCheck.position, direction, out hit, 1.5f, groundCheckLayerMask))
+        Debug.DrawRay(groundCheck.position, direction * rayLength);
+        if (Physics.Raycast(groundCheck.position, direction, out hit, rayLength, groundCheckLayerMask))
         {
             return true; 
         }
         return false;
     }
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.DrawWireSphere(groundCheck.position + Vector3.down * .1f, sphere.radius);
-    //}
 }

@@ -45,7 +45,7 @@ public class PlayerAnimation : MonoBehaviour
     public void SetIdle() 
     {
         if(!moveAnimations) { return; }
-        if (currentAnimation == EndDrifting && !AnimationHasEnded(EndDrifting)) { return; }
+        if (IsEndingDrift()) { return; }
         if (PlayerActionManager.Instance.moveValue.x > 0) { playerSprite.flipX = true; SetIdleTurn(); }
         else if (PlayerActionManager.Instance.moveValue.x < 0) { playerSprite.flipX = false; SetIdleTurn(); }
         else { SetIdleBack(); }
@@ -69,7 +69,7 @@ public class PlayerAnimation : MonoBehaviour
     public void SetAccelerate() 
     {
         if(!moveAnimations) { return; }
-        if (currentAnimation == EndDrifting && !AnimationHasEnded(EndDrifting)) { return; }
+        if(IsEndingDrift()) { return; }
         if (PlayerActionManager.Instance.moveValue.x > 0) { playerSprite.flipX = true; SetAccelerateTurn(); }
         else if (PlayerActionManager.Instance.moveValue.x < 0) { playerSprite.flipX = false; SetAccelerateTurn(); }
         else { SetAccelerateBack(); }
@@ -113,4 +113,5 @@ public class PlayerAnimation : MonoBehaviour
         playerAnimator.Play(Drifting);
         currentAnimation = Drifting;
     }
+    public bool IsEndingDrift() { return (currentAnimation == EndDrifting && !AnimationHasEnded(EndDrifting)); }
 }

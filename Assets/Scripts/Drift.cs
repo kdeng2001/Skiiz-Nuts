@@ -60,7 +60,7 @@ public class Drift : MonoBehaviour
         {
             speedBoostImage = speedBoostAnimation.gameObject.GetComponent<Image>();
             speedBoost = speedBoostImage.GetComponent<SpeedBoost>();
-            speedBoostAnimation.gameObject.SetActive(false); 
+            //speedBoostAnimation.gameObject.SetActive(false); 
         }
     }
 
@@ -171,9 +171,10 @@ public class Drift : MonoBehaviour
     void ApplySpeedBoost(float boost, Rigidbody rb, Vector3 direction)
     {
         rb.AddForce(boost * direction, ForceMode.Impulse);
-        if(speedBoostAnimation == null) { return; }
+        if(speedBoostAnimation == null) { Debug.Log("null speedBoostAnimation"); return; }
         else 
-        { 
+        {
+            Debug.Log("Speedboost prep");
             speedBoostImage.color = boostColors[driftBoostIndex];
             speedBoostImage.color = new Vector4(speedBoostImage.color.r, speedBoostImage.color.g, speedBoostImage.color.b, .1f);
             speedBoost.SetTimeElapsed(0);
