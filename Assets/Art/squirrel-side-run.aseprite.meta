@@ -1,0 +1,607 @@
+fileFormatVersion: 2
+guid: 2b969eba75efb6e4fa786424f2346e77
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 62a9f0aa5b59740cfbadc7e5f9823bb0, type: 3}
+  textureImporterSettings:
+    alphaSource: 1
+    mipMapMode: 0
+    enableMipMap: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+    convertToNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+    swizzle: 50462976
+    isReadable: 0
+    streamingMipmaps: 0
+    streamingMipmapsPriority: 0
+    vTOnly: 0
+    ignoreMipmapLimit: 0
+    nPOTScale: 1
+    sRGBTexture: 1
+    spriteMode: 2
+    spriteExtrude: 1
+    spriteMeshType: 1
+    alignment: 0
+    spritePivot: {x: 0.5, y: 0.5}
+    spritePixelsToUnits: 100
+    spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+    spriteGenerateFallbackPhysicsShape: 0
+    generateCubemap: 6
+    cubemapConvolution: 0
+    seamlessCubemap: 0
+    alphaIsTransparency: 1
+    spriteTessellationDetail: -1
+    textureType: 8
+    textureShape: 1
+    singleChannelComponent: 0
+    flipbookRows: 0
+    flipbookColumns: 0
+    ignorePngGamma: 0
+    cookieMode: 0
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+    normalMap: 0
+    textureFormat: 0
+    maxTextureSize: 0
+    lightmap: 0
+    compressionQuality: 0
+    linearTexture: 0
+    grayScaleToAlpha: 0
+    rGBM: 0
+    cubemapConvolutionSteps: 0
+    cubemapConvolutionExponent: 0
+    maxTextureSizeSet: 0
+    compressionQualitySet: 0
+    textureFormatSet: 0
+    applyGammaDecoding: 0
+  previousAsepriteImporterSettings:
+    fileImportMode: 1
+    importHiddenLayers: 0
+    layerImportMode: 1
+    defaultPivotSpace: 0
+    defaultPivotAlignment: 0
+    customPivotPosition: {x: 0.5, y: 0.5}
+    mosaicPadding: 4
+    spritePadding: 0
+    generateModelPrefab: 1
+    generateAnimationClips: 1
+    addSortingGroup: 1
+    addShadowCasters: 0
+  asepriteImporterSettings:
+    fileImportMode: 1
+    importHiddenLayers: 0
+    layerImportMode: 1
+    defaultPivotSpace: 0
+    defaultPivotAlignment: 0
+    customPivotPosition: {x: 0.5, y: 0.5}
+    mosaicPadding: 4
+    spritePadding: 0
+    generateModelPrefab: 1
+    generateAnimationClips: 1
+    addSortingGroup: 1
+    addShadowCasters: 0
+  importFileNodeState: 1
+  platformSettingsDirtyTick: 638506202877513738
+  textureAssetName: 
+  singleSpriteImportData:
+  - name: 
+    originalName: 
+    pivot: {x: 0, y: 0}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    spriteID: 
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 0}
+  animatedSpriteImportData:
+  - name: squirrel-side-run_Frame_0
+    originalName: 
+    pivot: {x: 0.4814815, y: 0.56}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 95
+      y: 87
+      width: 27
+      height: 25
+    spriteID: 070e0fabed980b24d81b11553999dc96
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 95, y: 87}
+  - name: squirrel-side-run_Frame_1
+    originalName: 
+    pivot: {x: 0.53846157, y: 0.53846157}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 57
+      y: 84
+      width: 26
+      height: 26
+    spriteID: b5807ab4ade170545aabfd328a17c53d
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 57, y: 84}
+  - name: squirrel-side-run_Frame_2
+    originalName: 
+    pivot: {x: 0.53846157, y: 0.53846157}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 57
+      y: 118
+      width: 26
+      height: 26
+    spriteID: 05d181a6fc213174096645ed06674e23
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 57, y: 118}
+  - name: squirrel-side-run_Frame_3
+    originalName: 
+    pivot: {x: 0.53846157, y: 0.53846157}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 57
+      y: 152
+      width: 26
+      height: 26
+    spriteID: 7ebbbc7ac6ccafc4c9e9a12a30965d19
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 57, y: 152}
+  - name: squirrel-side-run_Frame_4
+    originalName: 
+    pivot: {x: 0.52, y: 0.56}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 95
+      y: 186
+      width: 25
+      height: 25
+    spriteID: 030a26f2e92dc4f489f1268a3d244067
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 95, y: 186}
+  - name: squirrel-side-run_Frame_5
+    originalName: 
+    pivot: {x: 0.4814815, y: 0.56}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 95
+      y: 120
+      width: 27
+      height: 25
+    spriteID: b152cfdb00ebaa64d84e2a5719070077
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 95, y: 120}
+  - name: squirrel-side-run_Frame_6
+    originalName: 
+    pivot: {x: 0.53846157, y: 0.53846157}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 57
+      y: 186
+      width: 26
+      height: 26
+    spriteID: a232b17a7b4ffad46a26b512513ff74c
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 57, y: 186}
+  - name: squirrel-side-run_Frame_7
+    originalName: 
+    pivot: {x: 0.53846157, y: 0.53846157}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 57
+      y: 220
+      width: 26
+      height: 26
+    spriteID: 244aedcf16c3f9e428fdcce604dacf7b
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 57, y: 220}
+  - name: squirrel-side-run_Frame_8
+    originalName: 
+    pivot: {x: 0.53846157, y: 0.53846157}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 95
+      y: 53
+      width: 26
+      height: 26
+    spriteID: 5e788b3c355d6c34a9c30ef079627ba4
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 95, y: 53}
+  - name: squirrel-side-run_Frame_9
+    originalName: 
+    pivot: {x: 0.52, y: 0.56}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 95
+      y: 219
+      width: 25
+      height: 25
+    spriteID: 7d370188c9499b14eb8263cde83000f4
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 95, y: 219}
+  - name: squirrel-side-run_Frame_10
+    originalName: 
+    pivot: {x: 0.4814815, y: 0.56}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 95
+      y: 153
+      width: 27
+      height: 25
+    spriteID: 42975fbe0ba8b9b48b7aa40e546fdf5d
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 95, y: 153}
+  - name: squirrel-side-run_Frame_11
+    originalName: 
+    pivot: {x: 0.43333337, y: 0.6086957}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 57
+      y: 53
+      width: 30
+      height: 23
+    spriteID: 63b00294853a1dd43b871386c91d9dd2
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 57, y: 53}
+  - name: squirrel-side-run_Frame_12
+    originalName: 
+    pivot: {x: 0.6, y: 0.55}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 4
+      width: 45
+      height: 20
+    spriteID: 7f6a4770b5fc67a4380729477f00f255
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 4}
+  - name: squirrel-side-run_Frame_13
+    originalName: 
+    pivot: {x: 0.59999996, y: 0.625}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 57
+      y: 4
+      width: 50
+      height: 16
+    spriteID: adeb48e685e75e94d94d5f7d4769827c
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 57, y: 4}
+  - name: squirrel-side-run_Frame_14
+    originalName: 
+    pivot: {x: 0.63829786, y: 0.8235294}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 57
+      y: 28
+      width: 47
+      height: 17
+    spriteID: dde69806619c1f14daceb14966db682b
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 57, y: 28}
+  spriteSheetImportData: []
+  asepriteLayers:
+  - layerIndex: 0
+    guid: -601973055
+    name: squirrel-side-run
+    layerFlags: 0
+    layerType: 0
+    blendMode: 0
+    cells:
+    - name: squirrel-side-run_Frame_0
+      frameIndex: 0
+      cellRect:
+        x: 19
+        y: 2
+        width: 27
+        height: 25
+      spriteId: 070e0fabed980b24d81b11553999dc96
+    - name: squirrel-side-run_Frame_1
+      frameIndex: 1
+      cellRect:
+        x: 18
+        y: 2
+        width: 26
+        height: 26
+      spriteId: b5807ab4ade170545aabfd328a17c53d
+    - name: squirrel-side-run_Frame_2
+      frameIndex: 2
+      cellRect:
+        x: 18
+        y: 2
+        width: 26
+        height: 26
+      spriteId: 05d181a6fc213174096645ed06674e23
+    - name: squirrel-side-run_Frame_3
+      frameIndex: 3
+      cellRect:
+        x: 18
+        y: 2
+        width: 26
+        height: 26
+      spriteId: 7ebbbc7ac6ccafc4c9e9a12a30965d19
+    - name: squirrel-side-run_Frame_4
+      frameIndex: 4
+      cellRect:
+        x: 19
+        y: 2
+        width: 25
+        height: 25
+      spriteId: 030a26f2e92dc4f489f1268a3d244067
+    - name: squirrel-side-run_Frame_5
+      frameIndex: 5
+      cellRect:
+        x: 19
+        y: 2
+        width: 27
+        height: 25
+      spriteId: b152cfdb00ebaa64d84e2a5719070077
+    - name: squirrel-side-run_Frame_6
+      frameIndex: 6
+      cellRect:
+        x: 18
+        y: 2
+        width: 26
+        height: 26
+      spriteId: a232b17a7b4ffad46a26b512513ff74c
+    - name: squirrel-side-run_Frame_7
+      frameIndex: 7
+      cellRect:
+        x: 18
+        y: 2
+        width: 26
+        height: 26
+      spriteId: 244aedcf16c3f9e428fdcce604dacf7b
+    - name: squirrel-side-run_Frame_8
+      frameIndex: 8
+      cellRect:
+        x: 18
+        y: 2
+        width: 26
+        height: 26
+      spriteId: 5e788b3c355d6c34a9c30ef079627ba4
+    - name: squirrel-side-run_Frame_9
+      frameIndex: 9
+      cellRect:
+        x: 19
+        y: 2
+        width: 25
+        height: 25
+      spriteId: 7d370188c9499b14eb8263cde83000f4
+    - name: squirrel-side-run_Frame_10
+      frameIndex: 10
+      cellRect:
+        x: 19
+        y: 2
+        width: 27
+        height: 25
+      spriteId: 42975fbe0ba8b9b48b7aa40e546fdf5d
+    - name: squirrel-side-run_Frame_11
+      frameIndex: 11
+      cellRect:
+        x: 19
+        y: 2
+        width: 30
+        height: 23
+      spriteId: 63b00294853a1dd43b871386c91d9dd2
+    - name: squirrel-side-run_Frame_12
+      frameIndex: 12
+      cellRect:
+        x: 5
+        y: 5
+        width: 45
+        height: 20
+      spriteId: 7f6a4770b5fc67a4380729477f00f255
+    - name: squirrel-side-run_Frame_13
+      frameIndex: 13
+      cellRect:
+        x: 2
+        y: 6
+        width: 50
+        height: 16
+      spriteId: adeb48e685e75e94d94d5f7d4769827c
+    - name: squirrel-side-run_Frame_14
+      frameIndex: 14
+      cellRect:
+        x: 2
+        y: 2
+        width: 47
+        height: 17
+      spriteId: dde69806619c1f14daceb14966db682b
+    linkedCells: []
+    parentIndex: -1
+  platformSettings:
+  - name: DefaultTexturePlatform
+    overridden: 0
+    ignorePlatformSupport: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
+  - name: Standalone
+    overridden: 0
+    ignorePlatformSupport: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
+  - name: Android
+    overridden: 0
+    ignorePlatformSupport: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
+  - name: WebGL
+    overridden: 0
+    ignorePlatformSupport: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
+  generatePhysicsShape: 0
+  secondarySpriteTextures: []
+  spritePackingTag: 
+  canvasSize: {x: 64, y: 32}
