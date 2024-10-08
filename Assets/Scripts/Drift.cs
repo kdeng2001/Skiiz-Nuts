@@ -66,7 +66,7 @@ public class Drift : MonoBehaviour
 
     public void StartDrift(float inputDirection) 
     {
-        if(inputDirection == 0) { Debug.Log("drift needs direction"); return; }
+        if(inputDirection == 0) {/* Debug.Log("drift needs direction"); */return; }
         if(inputDirection > 0) { leftDriftParticles.gameObject.SetActive(true); }
         else { rightDriftParticles.gameObject.SetActive(true); }
         driftInitDirection = Mathf.RoundToInt(inputDirection);
@@ -74,6 +74,7 @@ public class Drift : MonoBehaviour
         playerAnimation.SetStartDrift();
         steer.enabled = false;
         SetUpDriftVariables();
+        AudioManager.Instance.PlaySFX(5);
         //Debug.Log("start drifting");
     }
 
@@ -128,7 +129,8 @@ public class Drift : MonoBehaviour
         }
     }    
     private void HandleFinishingDrift() 
-    {         
+    {
+        AudioManager.Instance.PauseSFX(5);
         finishedDrifting = true;
         steer.steerRate = steer.baseSteerRate;
         playerMovement.maxSpeed = playerMovement.defaultMaxSpeed;
@@ -136,7 +138,7 @@ public class Drift : MonoBehaviour
         steer.enabled = true;
         playerAnimation.EnableMoveAnimations();
         ActivateDriftBoost();
-        Debug.Log("finish drifting");
+        //Debug.Log("finish drifting");
     }
 
     private void HandleDriftTime() 
@@ -171,10 +173,10 @@ public class Drift : MonoBehaviour
     void ApplySpeedBoost(float boost, Rigidbody rb, Vector3 direction)
     {
         rb.AddForce(boost * direction, ForceMode.Impulse);
-        if(speedBoostAnimation == null) { Debug.Log("null speedBoostAnimation"); return; }
+        if(speedBoostAnimation == null) { /*Debug.Log("null speedBoostAnimation");*/ return; }
         else 
         {
-            Debug.Log("Speedboost prep");
+            //Debug.Log("Speedboost prep");
             speedBoostImage.color = boostColors[driftBoostIndex];
             speedBoostImage.color = new Vector4(speedBoostImage.color.r, speedBoostImage.color.g, speedBoostImage.color.b, .1f);
             speedBoost.SetTimeElapsed(0);

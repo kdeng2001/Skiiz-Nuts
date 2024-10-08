@@ -62,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
             // Uses accelerateForce value to push player in the direction
             else 
             { 
-                rb.AddForce(1 * accelerateForce * direction, ForceMode.Acceleration); Debug.Log("Accelerate"); 
+                rb.AddForce(1 * accelerateForce * direction, ForceMode.Acceleration); /*Debug.Log("Accelerate");*/ 
             }
         }
     }

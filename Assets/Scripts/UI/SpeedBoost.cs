@@ -22,11 +22,11 @@ public class SpeedBoost : MonoBehaviour
     {
         if(timeElapsed > durationTime)
         {
-            Debug.Log("finish boost:" + " time elapsed=" + timeElapsed + " durationTime=" + durationTime);
+            //Debug.Log("finish boost:" + " time elapsed=" + timeElapsed + " durationTime=" + durationTime);
             gameObject.SetActive(false);
         }
-        else if(isActiveAndEnabled){ timeElapsed += Time.deltaTime; Debug.Log("isActiveAndEnabled"); }
-        else { Debug.Log("bruh?"); }
+        else if(isActiveAndEnabled){ timeElapsed += Time.deltaTime;/* Debug.Log("isActiveAndEnabled"); */}
+        else { /*Debug.Log("bruh?");*/ }
     }
 
     public void SetTimeElapsed(float time) { timeElapsed = time; }
