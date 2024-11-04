@@ -13,7 +13,6 @@ public class PlayerController : MonoBehaviour
     public SphereCollider body;
     public Rigidbody rb;
 
-    bool testStart = true;
     private void Awake()
     {
         pMovement = GetComponent<PlayerMovement>();
