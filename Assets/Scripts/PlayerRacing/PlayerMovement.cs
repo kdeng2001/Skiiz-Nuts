@@ -48,7 +48,7 @@ public class PlayerMovement : MonoBehaviour
     /// Speeds the player up to maxSpeed + slopeBonusSpeed
     /// </summary>
     /// <param name="direction">the direction the player is facing/moving currently</param>
-    public void Accelerate(Vector3 direction)
+    private void Accelerate(Vector3 direction)
     {
         if(PlayerActionManager.Instance.moveValue.y > 0)
         {
@@ -70,7 +70,7 @@ public class PlayerMovement : MonoBehaviour
     /// Slows the player to an eventual stop using deccelerateForce
     /// </summary>
     /// <param name="direction">the direction the player is moving currently</param>
-    public void Decelerate(Vector3 direction)
+    private void Decelerate(Vector3 direction)
     {
         // slow to a stop
         if (PlayerActionManager.Instance.moveValue.y < 0)
@@ -83,7 +83,7 @@ public class PlayerMovement : MonoBehaviour
     /// Applies additional friction to the player, slowing the player when moving
     /// </summary>
     /// <param name="direction"></param>
-    public void Friction(Vector3 direction)
+    private void Friction(Vector3 direction)
     {
         if (rb.velocity.magnitude > 0 && !(PlayerActionManager.Instance.moveValue.y < 0)) 
         { 
