@@ -8,9 +8,9 @@ using UnityEngine;
 /// </summary>
 public class PlayerMovement : MonoBehaviour
 {
-    PlayerAnimation playerAnimation;
-    Rigidbody rb;
-    Grounding ground;
+    private PlayerAnimation playerAnimation;
+    private Rigidbody rb;
+    private Grounding ground;
     [Tooltip("The amount of forward force exerted in each fixed frame until reaching maxSpeed.")]
     [SerializeField] public float accelerateForce = 10f;
     [Tooltip("The amount of forward force exerted by default. This variable should not be modified.")]
@@ -26,9 +26,9 @@ public class PlayerMovement : MonoBehaviour
 
     private float slopeBonusSpeed = 0;
     [Tooltip("A bonus multiplier to maxSpeed that allows greater speed downhill to a certain extent, depending on the angle of the slope.")]
-    [SerializeField] float downSlopeBonusRate = 1.25f;
+    [SerializeField] private float downSlopeBonusRate = 1.25f;
     [Tooltip("A bonus multiplier to maxSpeed that allows lesser speed uphill to a certain extent, depending on the angle of the slope.")]
-    [SerializeField] float upSlopeBonusRate = 0.5f;
+    [SerializeField] private float upSlopeBonusRate = 0.5f;
     
     /// <summary>
     /// Finds components on gameObject.
