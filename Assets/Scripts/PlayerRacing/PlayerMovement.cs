@@ -41,7 +41,7 @@ public class PlayerMovement : MonoBehaviour
         Decelerate(direction);
         Accelerate(direction);
         Friction(direction); // bonus friction in addition to material
-        rb.AddForce(Vector3.down * ground.gravity * 5f, ForceMode.Acceleration); // gravity
+        rb.AddForce(5f * ground.gravity * Vector3.down, ForceMode.Acceleration); // gravity
 
     }
     /// <summary>
@@ -62,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
             // Uses accelerateForce value to push player in the direction
             else 
             { 
-                rb.AddForce(1 * accelerateForce * direction, ForceMode.Acceleration); /*Debug.Log("Accelerate");*/ 
+                rb.AddForce(1 * accelerateForce * direction, ForceMode.Acceleration); 
             }
         }
     }
@@ -87,7 +87,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (rb.velocity.magnitude > 0 && !(PlayerActionManager.Instance.moveValue.y < 0)) 
         { 
-            rb.AddForce(-1 * accelerateForce * direction * .1f * rb.velocity.magnitude * .1f, ForceMode.Acceleration); 
+            rb.AddForce(.1f * .1f * -1 * accelerateForce * rb.velocity.magnitude * direction, ForceMode.Acceleration); 
         }
         if (PlayerActionManager.Instance.moveValue.y == 0) { playerAnimation.SetIdle(); }
     }
@@ -100,6 +100,5 @@ public class PlayerMovement : MonoBehaviour
         slopeBonusSpeed = direction.y * -1 * 10;
         if (direction.y < 0) { slopeBonusSpeed *= downSlopeBonusRate; }
         else { slopeBonusSpeed *= upSlopeBonusRate; }
-        //Debug.Log("slopeBonusSpeed" + (slopeBonusSpeed + maxSpeed));
     }
 }
