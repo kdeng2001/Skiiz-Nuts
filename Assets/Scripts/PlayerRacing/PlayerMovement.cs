@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Contains functionality of player movement through Move(),
+/// and customization through public properties.
+/// </summary>
 public class PlayerMovement : MonoBehaviour
 {
     PlayerAnimation playerAnimation;
@@ -25,12 +29,17 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float downSlopeBonusRate = 1.25f;
     [Tooltip("A bonus multiplier to maxSpeed that allows lesser speed uphill to a certain extent, depending on the angle of the slope.")]
     [SerializeField] float upSlopeBonusRate = 0.5f;
+    
+    /// <summary>
+    /// Finds components on gameObject.
+    /// </summary>
     private void Awake()
     {
         rb = transform.parent.GetComponentInChildren<Rigidbody>();
         playerAnimation = GetComponent<PlayerAnimation>();
         ground = GetComponent<Grounding>();
     }
+    
     /// <summary>
     /// Calls functions that check player input and determines movement behavior
     /// </summary>
@@ -44,6 +53,7 @@ public class PlayerMovement : MonoBehaviour
         rb.AddForce(5f * ground.gravity * Vector3.down, ForceMode.Acceleration); // gravity
 
     }
+    
     /// <summary>
     /// Speeds the player up to maxSpeed + slopeBonusSpeed
     /// </summary>
@@ -66,6 +76,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
+    
     /// <summary>
     /// Slows the player to an eventual stop using deccelerateForce
     /// </summary>
@@ -79,6 +90,7 @@ public class PlayerMovement : MonoBehaviour
             rb.AddForce(-1f * deccelerateForce * direction, ForceMode.Acceleration);
         }
     }
+    
     /// <summary>
     /// Applies additional friction to the player, slowing the player when moving
     /// </summary>
@@ -91,6 +103,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (PlayerActionManager.Instance.moveValue.y == 0) { playerAnimation.SetIdle(); }
     }
+    
     /// <summary>
     /// Adjusts the player's max speed, to allow moving faster down, and slower up
     /// </summary>
