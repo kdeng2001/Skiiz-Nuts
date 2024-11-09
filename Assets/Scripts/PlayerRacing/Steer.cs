@@ -39,14 +39,14 @@ public class Steer : MonoBehaviour
         if (yAngle > 360) { yAngle = yAngle - 360; }
         if (yAngle < 360) { yAngle = yAngle + 360; }
         yAngle += Mathf.RoundToInt(inputDirection) * steerRate;
-        SetDirection(inputDirection);
+        SetDirection();
         //SphereDebug();
     }
 
     /// <summary>
     /// Determines direction of movement and rotation of sprite relative to the ground normal
     /// </summary>
-    public void SetDirection(float inputDirection)
+    public void SetDirection()
     {
         direction = new Vector3(Mathf.Cos(Mathf.Deg2Rad * (yAngle - 90)), 0,
         Mathf.Sin(Mathf.Deg2Rad * (yAngle + 90)));
