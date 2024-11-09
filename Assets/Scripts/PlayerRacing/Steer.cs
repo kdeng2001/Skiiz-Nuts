@@ -31,7 +31,7 @@ public class Steer : MonoBehaviour
     }
 
     /// <summary>
-    /// Steers player in a given direction to allow turning of corners.
+    /// Calculates the direction the player faces/moves based on an input direction the player is steering towards.
     /// </summary>
     /// <param name="inputDirection">-1,0,1 depending on horizontal input of player </param>
     public void Steering(float inputDirection)
@@ -44,7 +44,7 @@ public class Steer : MonoBehaviour
     }
 
     /// <summary>
-    /// Determines direction of movement and rotation of sprite relative to the ground normal
+    /// Determines direction of movement and rotation of sprite relative to the ground normal.
     /// </summary>
     private void SetDirection()
     {
@@ -118,6 +118,7 @@ public class Steer : MonoBehaviour
 
     /// <summary>
     /// Handles direction to apply velocity when the player is on the ground.
+    /// The velocity vector is always perpendicular to the current slope.
     /// </summary>
     /// <param name="ground"></param>
     private void GroundedMovement(RaycastHit ground)
