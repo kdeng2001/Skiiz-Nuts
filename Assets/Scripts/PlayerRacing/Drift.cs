@@ -5,16 +5,16 @@ using UnityEngine.UI;
 
 public class Drift : MonoBehaviour
 {
-    PlayerAnimation playerAnimation;
-    Steer steer;
-    Rigidbody rb;
-    PlayerMovement playerMovement;
+    private PlayerAnimation playerAnimation;
+    private Steer steer;
+    private Rigidbody rb;
+    private PlayerMovement playerMovement;
     public bool drifting { get; private set; }
     public bool finishedDrifting { get; private set; }
-    public float StartDriftTime { get; private set; }
+    public float startDriftTime { get; private set; }
     public int driftInitDirection { get; private set; }
     [Tooltip("Multiplier that decreases acceleration and maxBaseSpeed (from ordinary movement) while drifting.")]
-    [SerializeField] float driftSlowRate = .75f;
+    [SerializeField] private float driftSlowRate = .75f;
     
     [Tooltip("Rate the player steers when drifting while holding the same direction the drift was initiated.")]
     [SerializeField] public float sharpSteerRate = 4;
@@ -29,13 +29,13 @@ public class Drift : MonoBehaviour
     private int driftBoostIndex;
 
     [Tooltip("drift particles that appear on the right of player.")]
-    [SerializeField] ParticleSystem rightDriftParticles;
-    ParticleSystem.MainModule rDPMain;
+    [SerializeField] private ParticleSystem rightDriftParticles;
+    private ParticleSystem.MainModule rDPMain;
     [Tooltip("drift particles that appear on the left of player.")]
-    [SerializeField] ParticleSystem leftDriftParticles;
-    ParticleSystem.MainModule lDPMain;
+    [SerializeField] private ParticleSystem leftDriftParticles;
+    private ParticleSystem.MainModule lDPMain;
     [Tooltip("Speedboost UI effect.")]
-    [SerializeField] ImageAnimation speedBoostAnimation;
+    [SerializeField] private ImageAnimation speedBoostAnimation;
     private Image speedBoostImage;
     private SpeedBoost speedBoost;
     [Tooltip("Color of speed boost and drift particles while drifting, depending on time elapsed and driftTimeThreshold.")]
@@ -64,6 +64,16 @@ public class Drift : MonoBehaviour
         }
     }
 
+    public void Drifting(float inputDirection)
+    {
+        if(drifting)
+        {
+            if (Mathf.RoundToInt(inputDirection) == driftInitDirection) { SharpDrift(); }
+            else if (Mathf.RoundToInt(inputDirection) == -1 * driftInitDirection) { WideDrift(); }
+            else { NormalDrift(); }
+            HandleDriftTime();
+        }
+    }
     public void StartDrift(float inputDirection) 
     {
         if(inputDirection == 0) {/* Debug.Log("drift needs direction"); */return; }
@@ -77,12 +87,22 @@ public class Drift : MonoBehaviour
         AudioManager.Instance.PlaySFX(5);
         //Debug.Log("start drifting");
     }
-
+    public void EndDrift() 
+    {
+        if(drifting) 
+        { 
+            playerAnimation.SetEndDrift();
+            rightDriftParticles.gameObject.SetActive(false);
+            leftDriftParticles.gameObject.SetActive(false);
+            drifting = false;
+            HandleFinishingDrift();
+        }
+    }    
     private void SetUpDriftVariables()
     {
         drifting = true;
         finishedDrifting = false;
-        StartDriftTime = Time.time;
+        startDriftTime = Time.time;
         driftBoostIndex = -1;
         steer.steerRate = sharpSteerRate; 
         playerMovement.maxSpeed = playerMovement.maxSpeed * driftSlowRate;
@@ -90,16 +110,6 @@ public class Drift : MonoBehaviour
     }
 
 
-    public void Drifting(float inputDirection)
-    {
-        if(drifting)
-        {
-            if (Mathf.RoundToInt(inputDirection) == driftInitDirection) { SharpDrift(); }
-            else if (Mathf.RoundToInt(inputDirection) == -1 * driftInitDirection) { WideDrift(); }
-            else { NormalDrift(); }
-            HandleDriftTime();
-        }
-    }
     private void SharpDrift() 
     {
         steer.steerRate = sharpSteerRate;
@@ -112,22 +122,12 @@ public class Drift : MonoBehaviour
         steer.Steering(driftInitDirection);
     }
 
-    public void NormalDrift()
+    private void NormalDrift()
     {
         steer.steerRate = normalSteerRate;
         steer.Steering(driftInitDirection);
     }
-    public void EndDrift() 
-    {
-        if(drifting) 
-        { 
-            playerAnimation.SetEndDrift();
-            rightDriftParticles.gameObject.SetActive(false);
-            leftDriftParticles.gameObject.SetActive(false);
-            drifting = false;
-            HandleFinishingDrift();
-        }
-    }    
+
     private void HandleFinishingDrift() 
     {
         AudioManager.Instance.PauseSFX(5);
@@ -145,7 +145,7 @@ public class Drift : MonoBehaviour
     {
         for(int i=0; i < driftTimeThreshold.Length; i++)
         {
-            if (i > driftBoostIndex && Time.time - StartDriftTime > driftTimeThreshold[i])
+            if (i > driftBoostIndex && Time.time - startDriftTime > driftTimeThreshold[i])
             {
                 //Debug.Log("reach drift boost " + i);
                 driftBoostIndex = i;
