@@ -46,7 +46,7 @@ public class Steer : MonoBehaviour
     /// <summary>
     /// Determines direction of movement and rotation of sprite relative to the ground normal
     /// </summary>
-    public void SetDirection()
+    private void SetDirection()
     {
         direction = new Vector3(Mathf.Cos(Mathf.Deg2Rad * (yAngle - 90)), 0,
         Mathf.Sin(Mathf.Deg2Rad * (yAngle + 90)));
