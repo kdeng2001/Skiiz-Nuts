@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Grounding contains a method for checking whether the gameObject with this component is close to/touching the ground.
+/// </summary>
 public class Grounding : MonoBehaviour
 {
     [SerializeField] public int gravity = 30;
@@ -9,10 +12,6 @@ public class Grounding : MonoBehaviour
     /// Transform under player
     /// </summary>
     [SerializeField] public Transform groundCheck;
-    /// <summary>
-    /// radius of ground check
-    /// </summary>
-    [SerializeField] public Vector3 groundCheckDimensions = new Vector3(1, 1, 1);
     /// <summary>
     /// layers that are considered "ground"
     /// </summary>
