@@ -10,7 +10,7 @@ public class AccelerateBehavior : StateMachineBehaviour
     private float currentLoopIndex = 0.5f;
     [SerializeField] private int[] sfxToPlay;
     /// <summary>
-    /// Plays an accelerate sfx every 0.5 seconds into accelerate animation state (which loops).
+    /// Plays an accelerate sfx every time the animation has reached the halfway mark (which loops).
     /// </summary>
     /// <param name="animator"> The animator evaluating this state machine. </param>
     /// <param name="stateInfo"> The info about the state being evaluated. </param>
@@ -18,7 +18,7 @@ public class AccelerateBehavior : StateMachineBehaviour
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnStateUpdate(animator, stateInfo, layerIndex);
-        //Debug.Log("normalized time: " + stateInfo.normalizedTime);
+        //Debug.Log($"normalized time: {stateInfo.normalizedTime}, currentLoopIndex: {currentLoopIndex}");
         if (stateInfo.normalizedTime > currentLoopIndex)
         {
             // picks from a random group of accelerate sound effects to play
@@ -36,6 +36,7 @@ public class AccelerateBehavior : StateMachineBehaviour
     /// <param name="layerIndex"> The current layer being evaluated.  </param>
     public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        //Debug.Log("exit state");
         base.OnStateExit(animator, stateInfo, layerIndex);
         currentLoopIndex = 0.5f;
     }
