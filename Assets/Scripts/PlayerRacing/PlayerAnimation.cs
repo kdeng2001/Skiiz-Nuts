@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// PlayerAnimation contains methods for playing player racing animations
+/// PlayerAnimation contains methods for playing player racing animations.
 /// </summary>
 public class PlayerAnimation : MonoBehaviour
 {
-    Animator playerAnimator;
-    SpriteRenderer playerSprite;
+    private Animator playerAnimator;
+    private SpriteRenderer playerSprite;
 
     // The names of animations as specified in the PlayerAnimator asset.
     public readonly string IdleTurn = "IdleTurn";
@@ -19,12 +19,12 @@ public class PlayerAnimation : MonoBehaviour
     public readonly string Drifting = "Drifting";
     public readonly string EndDrifting = "EndDrifting";
 
-    bool moveAnimations = true;
+    private bool moveAnimations = true;
 
-    string currentAnimation = "";
-    bool driftFlip;
+    private string currentAnimation = "";
+    private bool driftFlip;
     /// <summary>
-    /// Gets necessary components for playing animations
+    /// Gets necessary components for playing animations.
     /// </summary>
     private void Awake()
     {
