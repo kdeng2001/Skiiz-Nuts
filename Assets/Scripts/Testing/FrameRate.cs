@@ -6,7 +6,7 @@ public class FrameRate : MonoBehaviour
 {
     // Start is called before the first frame update
     [SerializeField] public int frameRate = 5;
-    void Start()
+    private void Start()
     {
         Application.targetFrameRate = frameRate;
     }
