@@ -4,11 +4,11 @@ using UnityEngine;
 
 /// <summary>
 /// FrameRate is a component that when attached to any gameObject, will make the frame rate equal to the frameRate property.
-/// It's useful for debugging issues that arise different frame rate between users.
+///  It's useful for debugging issues that arise at different frame rates between users.
 /// </summary>
 public class FrameRate : MonoBehaviour
 {
-    [SerializeField] public int frameRate = 5;
+    [SerializeField] private int frameRate = 5;
     /// <summary>
     /// Sets the frame rate to what frameRate property is initially.
     /// </summary>
