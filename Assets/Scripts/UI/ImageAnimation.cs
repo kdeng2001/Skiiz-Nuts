@@ -14,10 +14,8 @@ public class ImageAnimation : MonoBehaviour
 
 	private int index = 0;
 	private Image image;
-	private int frame = 0;
 
 	public int framesPerSecond = 12;
-	private float secondsPerFrame;
 	private float timeElapsed = 0;
 	/// <summary>
 	/// Gets reference to Image component from gameObject.
@@ -34,12 +32,9 @@ public class ImageAnimation : MonoBehaviour
     private void Update()
 	{
 		if (!loop && index == sprites.Length) return;
-		frame++;
 		timeElapsed += Time.deltaTime;
-		//if (frame < spritePerFrame) return;
 		if(timeElapsed < (float) 1f/framesPerSecond) { return; }
 		image.sprite = sprites[index];
-		frame = 0;
 		timeElapsed = 0;
 		index++;
 		if (index >= sprites.Length)
