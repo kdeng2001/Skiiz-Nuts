@@ -1,7 +1,9 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
-
+/// <summary>
+/// Plays an animation from an Image component.
+/// </summary>
 public class ImageAnimation : MonoBehaviour
 {
 
@@ -17,11 +19,18 @@ public class ImageAnimation : MonoBehaviour
 	public int framesPerSecond = 12;
 	private float secondsPerFrame;
 	private float timeElapsed = 0;
+	/// <summary>
+	/// Gets reference to Image component from gameObject.
+	/// </summary>
 	void Awake()
 	{
 		image = GetComponent<Image>();
 	}
 
+	/// <summary>
+	/// Checks if animation is looped. If so, the animation will reset when finished.
+	/// Otherwise, the animation plays once.
+	/// </summary>
     void Update()
 	{
 		if (!loop && index == sprites.Length) return;
