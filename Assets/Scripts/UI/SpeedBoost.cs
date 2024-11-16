@@ -9,7 +9,6 @@ public class SpeedBoost : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Log("Speedboost awake");
         gameObject.SetActive(false);
     }
 
@@ -22,11 +21,9 @@ public class SpeedBoost : MonoBehaviour
     {
         if(timeElapsed > durationTime)
         {
-            //Debug.Log("finish boost:" + " time elapsed=" + timeElapsed + " durationTime=" + durationTime);
             gameObject.SetActive(false);
         }
-        else if(isActiveAndEnabled){ timeElapsed += Time.deltaTime;/* Debug.Log("isActiveAndEnabled"); */}
-        else { /*Debug.Log("bruh?");*/ }
+        else if(isActiveAndEnabled){ timeElapsed += Time.deltaTime;}
     }
 
     public void SetTimeElapsed(float time) { timeElapsed = time; }
