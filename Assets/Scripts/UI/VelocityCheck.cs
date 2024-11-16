@@ -8,8 +8,8 @@ using TMPro;
 /// </summary>
 public class VelocityCheck : MonoBehaviour
 {
-    TextMeshProUGUI text;
-    Rigidbody playerRB;
+    private TextMeshProUGUI text;
+    private Rigidbody playerRB;
 
     /// <summary>
     /// Gets the references to the text component where the speed and velocity are displayed, 
