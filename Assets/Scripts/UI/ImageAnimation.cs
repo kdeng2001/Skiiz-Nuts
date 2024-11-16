@@ -22,7 +22,7 @@ public class ImageAnimation : MonoBehaviour
 	/// <summary>
 	/// Gets reference to Image component from gameObject.
 	/// </summary>
-	void Awake()
+	private void Awake()
 	{
 		image = GetComponent<Image>();
 	}
@@ -31,7 +31,7 @@ public class ImageAnimation : MonoBehaviour
 	/// Checks if animation is looped. If so, the animation will reset when finished.
 	/// Otherwise, the animation plays once.
 	/// </summary>
-    void Update()
+    private void Update()
 	{
 		if (!loop && index == sprites.Length) return;
 		frame++;
