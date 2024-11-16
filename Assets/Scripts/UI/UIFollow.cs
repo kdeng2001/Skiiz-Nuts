@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UIFollow : MonoBehaviour
 {
-    [SerializeField] Transform followTarget;
+    [SerializeField] private Transform followTarget;
     private void Update()
     {
         UIFollowObject();
